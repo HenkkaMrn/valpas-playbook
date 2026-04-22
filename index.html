@@ -209,6 +209,26 @@
     color: var(--muted); border-color: var(--border);
   }
   .nav-link-dark:hover { color: var(--off-white); }
+
+  /* SITE NAV */
+  .site-nav {
+    display: flex; gap: 4px;
+    margin-top: 40px;
+    border-top: 1px solid rgba(7,10,25,0.12);
+    padding-top: 20px;
+  }
+  .site-nav a {
+    font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase;
+    font-weight: 600; text-decoration: none;
+    padding: 7px 18px; border-radius: 100px;
+    color: rgba(7,10,25,0.45);
+    transition: background 0.15s, color 0.15s;
+  }
+  .site-nav a:hover { background: rgba(7,10,25,0.07); color: rgba(7,10,25,0.7); }
+  .site-nav a.active {
+    background: rgba(7,10,25,0.09);
+    color: rgba(7,10,25,0.85);
+  }
 </style>
 </head>
 <body>
@@ -218,6 +238,10 @@
   <div class="header-meta">Operations · Internal</div>
   <h1 class="header-title">Self-Installation<br><em>Kickoff Playbook</em></h1>
   <div class="header-badge">Draft v1 · Apr 2026</div>
+  <nav class="site-nav">
+    <a href="/" class="active">Playbook</a>
+    <a href="/flowchart">Flowchart</a>
+  </nav>
 </div>
 
 <main>
@@ -405,9 +429,6 @@
     <p>1. Escalation path during install: what the hotel handles vs what goes to OPS.</p>
     <p>2. Post-install email template: needs to be written.</p>
     <p>3. 30-day check-in: decide if it is standard for all members or triggered by issues only.</p>
-  </div>
-  <div style="margin-top: 32px;">
-    <a href="/flowchart" class="nav-link">View Process Flowchart →</a>
   </div>
 
 

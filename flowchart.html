@@ -212,6 +212,26 @@
   }
   .nav-link-dark:hover { color: var(--off-white); }
 
+
+  /* SITE NAV */
+  .site-nav {
+    display: flex; gap: 4px;
+    margin-top: 40px;
+    border-top: 1px solid rgba(7,10,25,0.12);
+    padding-top: 20px;
+  }
+  .site-nav a {
+    font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase;
+    font-weight: 600; text-decoration: none;
+    padding: 7px 18px; border-radius: 100px;
+    color: rgba(7,10,25,0.45);
+    transition: background 0.15s, color 0.15s;
+  }
+  .site-nav a:hover { background: rgba(7,10,25,0.07); color: rgba(7,10,25,0.7); }
+  .site-nav a.active {
+    background: rgba(7,10,25,0.09);
+    color: rgba(7,10,25,0.85);
+  }
 </style>
 </head>
 <body>
@@ -221,12 +241,14 @@
   <div class="header-meta">Valpas · Internal</div>
   <div class="header-title">Process <em>Flowchart</em></div>
   <span class="header-badge">Installation Process</span>
+
+  <nav class="site-nav">
+    <a href="/">Playbook</a>
+    <a href="/flowchart" class="active">Flowchart</a>
+  </nav>
 </div>
 
 <main>
-  <div style="margin-bottom: 48px;">
-    <a href="/" class="nav-link nav-link-dark">← Back to Playbook</a>
-  </div>
   <!-- FLOWCHART -->
   <h2 class="flow-heading">Process Flowchart</h2>
   <p class="flow-sub">What triggers what — from configuration flag to installation closed</p>
