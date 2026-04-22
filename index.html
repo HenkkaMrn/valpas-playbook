@@ -246,7 +246,6 @@
 
 <main>
 
-  <!-- PHASE 1 -->
   <div class="phase-header">
     <span class="phase-num">Phase 01</span>
     <h2 class="phase-title">Before the Meeting</h2>
@@ -254,54 +253,52 @@
   </div>
 
   <table class="playbook-table">
-    <thead><tr><th>#</th><th>Step</th><th>Where</th><th>Owner</th><th>Notes</th></tr></thead>
+    <thead><tr><th>#</th><th>Where</th><th>Owner</th><th>Notes</th></tr></thead>
     <tbody>
       <tr>
         <td class="step-num">01</td>
-        <td>Flagged as ready for kickoff during configuration stage</td>
         <td><span class="where w-notion">Notion</span></td>
         <td><span class="owner-ops">OPS</span></td>
-        <td class="note">Triggered when config checklist is complete: hardware shipped, account created, room list received.</td>
+        <td class="note">Confirm the hotel is marked as ready for kickoff during the configuration stage. Use this only when the checklist is complete, including hardware shipped, account created, and room list received.</td>
       </tr>
       <tr>
         <td class="step-num">02</td>
-        <td>Confirm hardware delivered to hotel</td>
-        <td><span class="where w-notion">Notion</span></td>
+        <td><span class="where w-notion">Shipping tracking</span></td>
         <td><span class="owner-ops">OPS</span></td>
-        <td class="note">Check shipping tracking. Do not schedule call until confirmed received.</td>
+        <td class="note">Confirm that the hardware has been delivered to the hotel. Do not schedule the kickoff call before delivery is confirmed.</td>
       </tr>
       <tr>
         <td class="step-num">03</td>
-        <td>Impersonate the hotel account in the dashboard and verify that it is correctly set up and ready to use.</td>
         <td><span class="where w-dashboard">Dashboard</span></td>
         <td><span class="owner-ops">OPS</span></td>
-        <td class="note">Check: account active, correct permissions, no leftover rooms, gateway configured and paired.</td>
+        <td class="note">Impersonate the hotel account and verify that it is correctly set up and ready to use. Confirm the account is active, permissions are correct, room setup is clean, and the gateway is configured if applicable.</td>
       </tr>
       <tr>
         <td class="step-num">04</td>
-        <td>Confirm that the room list is complete, including room numbers and bed count per room.</td>
-        <td><span class="where w-notion">Notion</span></td>
+        <td><span class="where w-notion">Notion / Room list</span></td>
         <td><span class="owner-ops">OPS</span></td>
-        <td class="note">Collected during configuration phase via template. Verify bed types: legs vs platform/wall mount.</td>
+        <td class="note">Confirm that the room list is complete, including room numbers and bed count per room. Check whether beds use legs or need wall mounts, and flag any unusual setups before the call.</td>
       </tr>
       <tr>
         <td class="step-num">05</td>
-        <td>Send pre-call email: quick guide, app links, Calendly link</td>
         <td><span class="where w-email">Email</span></td>
         <td><span class="owner-both">OPS / CSM</span></td>
-        <td class="note">Use saved template. Attach quick guide. Introduce May and Salah as ongoing contacts.</td>
+        <td class="note">Send the pre-call email with the quick guide, app links, and meeting link. Confirm who will attend the call and who will lead the installation on site.</td>
       </tr>
       <tr>
         <td class="step-num">06</td>
-        <td>Confirm that the hotel contact has downloaded the app before the call.</td>
-        <td><span class="where w-email">Email</span></td>
+        <td><span class="where w-app">Email / App</span></td>
         <td><span class="owner-both">OPS / CSM</span></td>
-        <td class="note">If not confirmed, follow up 24h before the call.</td>
+        <td class="note">Confirm that the main hotel contact has downloaded the app before the call and can log in. Follow up before the meeting if this has not been confirmed.</td>
+      </tr>
+      <tr>
+        <td class="step-num">07</td>
+        <td><span class="where w-notion">Internal prep</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Prepare any installation-specific notes before the call, including unusual bed types, documentation requirements, and certification-related points that should be explained during the meeting.</td>
       </tr>
     </tbody>
   </table>
-
-  <!-- PHASE 2 -->
   <div class="phase-header">
     <span class="phase-num">Phase 02</span>
     <h2 class="phase-title">During the Meeting</h2>
@@ -309,128 +306,259 @@
   </div>
 
   <table class="playbook-table">
-    <thead><tr><th>#</th><th>Topic</th><th>Tool</th><th>Key Points to Cover</th></tr></thead>
+    <thead><tr><th>#</th><th>Where</th><th>Owner</th><th>Notes</th></tr></thead>
     <tbody>
       <tr>
         <td class="step-num">01</td>
-        <td>Router setup</td>
-        <td><span class="where w-app">App + Guide</span></td>
-        <td class="note">Placement: ideally no more than one wall away from the nearest rooms. Ethernet vs Wi-Fi. Status lights: green = good, red = restart first, then contact OPS.</td>
+        <td><span class="where w-call">Live call</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Open the call by explaining the purpose of the installation, the goal of the meeting, and what success looks like. Confirm who will carry out the installation and who will be the main contact.</td>
       </tr>
       <tr>
         <td class="step-num">02</td>
-        <td>App login and Installation Mode</td>
-        <td><span class="where w-app">App</span></td>
-        <td class="note">Confirm during the call that they can log in successfully. Profile → Installation Mode → tap "+" → add room → name it. Walk through naming convention.</td>
+        <td><span class="where w-app">Live call / App</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Confirm the installation scope, including which rooms are included, what bed types the hotel has, and whether any rooms need special handling such as wall mounts or exceptions.</td>
       </tr>
       <tr>
         <td class="step-num">03</td>
-        <td>Smart leg installation (beds with legs)</td>
         <td><span class="where w-app">App + Guide</span></td>
-        <td class="note">Install smart legs at the head of the bed and basic legs at the foot. For corner beds, place the smart leg so it faces the room. Pairing: remove cassette → pair → remove battery strip → reinsert → confirm blinking red.</td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Explain router setup, including correct placement, power, and connection requirements. Confirm where the router will be placed and what to do if the status light shows an issue.</td>
       </tr>
       <tr>
         <td class="step-num">04</td>
-        <td>Wall mount installation (platform beds only)</td>
-        <td><span class="where w-app">App + Guide</span></td>
-        <td class="note">Cover this only if the hotel has beds without legs. Use leg as height guide before screwing mount. Verify cassette is easily removable before finishing.</td>
+        <td><span class="where w-app">App</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Confirm that the hotel contact can log in during the call and show how to use Installation Mode. Walk through the room naming process and explain how rooms should be added consistently.</td>
       </tr>
       <tr>
         <td class="step-num">05</td>
-        <td>Routing devices (only if rooms go offline)</td>
-        <td><span class="where w-app">App</span></td>
-        <td class="note">Only introduce routing devices if rooms remain offline after 8 hours. One near router, others between router and problem rooms. Remove battery strip to activate. Wait up to 8h.</td>
+        <td><span class="where w-app">App + Guide</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Explain smart leg installation for beds with legs. Confirm that smart legs go at the head of the bed and basic legs at the foot, and explain the pairing sequence step by step.</td>
       </tr>
       <tr>
         <td class="step-num">06</td>
-        <td>What "done" looks like</td>
-        <td><span class="where w-dashboard">Dashboard</span></td>
-        <td class="note">Follow installation remotely daily at first and at least weekly, follow proactively when needed.</td>
+        <td><span class="where w-app">App + Guide</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Explain wall mount installation only if the hotel has beds without legs. Confirm when wall mounts should be used and what the team should check before fixing them in place.</td>
       </tr>
       <tr>
         <td class="step-num">07</td>
-        <td>Troubleshooting during install</td>
-        <td><span class="where w-call">Live Call</span></td>
-        <td class="note">Cassette not blinking → remove and reinsert. Room offline → check open tasks first, then add routing device. Router red → restart, then contact OPS.</td>
+        <td><span class="where w-call">Live call</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Explain what the hotel should do if a room does not match the expected setup. Tell them to stop, take pictures, and contact Valpas before continuing in that room.</td>
       </tr>
       <tr>
         <td class="step-num">08</td>
-        <td>Escalation path — what to do if something is broken</td>
-        <td><span class="where w-call">Live Call</span></td>
-        <td><span class="status-tbd">⚠ To design</span> <span class="note">— define what the hotel handles vs what goes to OPS</span></td>
+        <td><span class="where w-call">Live call</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Explain what documentation must be sent after installation. Confirm what pictures or other proof of installation the hotel must provide so Valpas can verify that the setup was completed correctly.</td>
       </tr>
       <tr>
         <td class="step-num">09</td>
-        <td>Agree on a deadline for completing the installation in all rooms.</td>
-        <td><span class="where w-call">Live Call</span></td>
+        <td><span class="where w-call">Live call</span></td>
         <td><span class="owner-both">OPS / CSM</span></td>
-        <td class="note">Confirm the deadline before ending the call. Document it in Notion.</td>
+        <td class="note">Agree on the deadline for completing the installation. Confirm how progress will be followed and when the hotel should reach out if problems appear.</td>
+      </tr>
+      <tr>
+        <td class="step-num">10</td>
+        <td><span class="where w-call">Live call</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Explain that the goal is not only to complete the installation, but also to make sure the hotel is ready to move toward certification. Clarify any certification-related next steps that apply after installation is completed.</td>
+      </tr>
+      <tr>
+        <td class="step-num">11</td>
+        <td><span class="where w-call">Live call</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Explain the escalation path. Confirm what the hotel can handle on its own and what must be escalated to OPS. Include examples such as missing hardware, pairing failure, or repeated offline rooms.</td>
+      </tr>
+      <tr>
+        <td class="step-num">12</td>
+        <td><span class="where w-call">Live call</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Close the call by recapping the deadline, the documentation requirement, the escalation path, and the next step after installation is complete.</td>
       </tr>
     </tbody>
   </table>
-
-  <!-- PHASE 3 -->
   <div class="phase-header">
     <span class="phase-num">Phase 03</span>
     <h2 class="phase-title">After the Meeting</h2>
-    <span class="phase-goal">Confirm completion, catch issues, close the loop.</span>
+    <span class="phase-goal">Confirm progress, verify quality, support certification, and close the loop.</span>
   </div>
 
   <table class="playbook-table">
-    <thead><tr><th>#</th><th>Step</th><th>Where</th><th>Owner</th><th>Notes</th></tr></thead>
+    <thead><tr><th>#</th><th>Where</th><th>Owner</th><th>Notes</th></tr></thead>
     <tbody>
       <tr>
         <td class="step-num">01</td>
-        <td>Monitor installation progress toward the agreed deadline and follow up proactively if needed.</td>
-        <td><span class="where w-email">Email / Phone</span></td>
+        <td><span class="where w-dashboard">Dashboard / Hotel updates</span></td>
         <td><span class="owner-both">OPS / CSM</span></td>
-        <td class="note">Email templates to be created. Follow up via phone if no response or if deadline is approaching.</td>
+        <td class="note">Monitor installation progress toward the agreed deadline and follow up proactively if needed. Ask for updates if progress is unclear or if issues appear.</td>
       </tr>
       <tr>
         <td class="step-num">02</td>
-        <td>Verify all rooms online in dashboard</td>
-        <td><span class="where w-dashboard">Dashboard</span></td>
-        <td><span class="owner-ops">OPS</span></td>
-        <td class="note">Check: all rooms visible, all cassettes active and online, no offline sensors.</td>
+        <td><span class="where w-email">Email / Message</span></td>
+        <td><span class="owner-hotel">Hotel / OPS / CSM</span></td>
+        <td class="note">Hotel confirms when the installation is complete. During the kickoff call, prompt them to send a message when the last room is done.</td>
       </tr>
       <tr>
         <td class="step-num">03</td>
-        <td>Send post-install confirmation email</td>
-        <td><span class="where w-email">Email</span></td>
-        <td><span class="owner-both">OPS / CSM</span></td>
-        <td><span class="status-tbd">⚠ To build</span> <span class="note">— no standard template yet</span></td>
+        <td><span class="where w-email">Email / Shared media</span></td>
+        <td><span class="owner-hotel">Hotel / OPS / CSM</span></td>
+        <td class="note">Request the agreed installation documentation from the hotel, such as pictures of the setup or other proof that the installation was completed correctly.</td>
       </tr>
       <tr>
         <td class="step-num">04</td>
-        <td>Confirm that hotel staff understand the difference between Prevention tasks (purple dot) and Maintenance tasks (yellow dot).</td>
-        <td><span class="where w-email">Email</span></td>
+        <td><span class="where w-dashboard">Dashboard / Documentation review</span></td>
         <td><span class="owner-both">OPS / CSM</span></td>
-        <td class="note">Cover in post-install email or confirm it was in the quick guide they received.</td>
+        <td class="note">Review dashboard status and submitted documentation to confirm that the installation was completed correctly. Verify that all rooms are visible, cassettes are active and online, and there are no unexplained offline rooms or visible setup issues.</td>
       </tr>
       <tr>
         <td class="step-num">05</td>
-        <td>Mark the installation as complete in Notion, log any issues, and confirm the handoff to the CS team.</td>
-        <td><span class="where w-notion">Notion</span></td>
-        <td><span class="owner-ops">OPS</span></td>
-        <td class="note">Update status, log any issues, confirm account is handed to CS team (May / Salah).</td>
+        <td><span class="where w-email">Email</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Send the post-install confirmation email once installation and documentation have been reviewed. Confirm that the installation has been completed and note any next steps.</td>
       </tr>
       <tr>
         <td class="step-num">06</td>
-        <td>30-day check-in</td>
-        <td><span class="where w-email">Email</span></td>
+        <td><span class="where w-email">Email / Guide</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Confirm that hotel staff understand Prevention tasks and Maintenance tasks, or make sure this was already covered in the guide and follow up if clarification is needed.</td>
+      </tr>
+      <tr>
+        <td class="step-num">07</td>
+        <td><span class="where w-notion">Internal handoff</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Confirm whether the hotel is ready to move forward toward certification. If more actions are needed, note them clearly and assign the next owner.</td>
+      </tr>
+      <tr>
+        <td class="step-num">08</td>
+        <td><span class="where w-notion">Notion</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Mark the installation as complete, log any issues found during review, and confirm the handoff to the CS team.</td>
+      </tr>
+      <tr>
+        <td class="step-num">09</td>
+        <td><span class="where w-email">Email / Calendar</span></td>
         <td><span class="owner-csm">CSM</span></td>
-        <td><span class="status-tbd">⚠ To define</span> <span class="note">— standard for all members, or triggered by issues only?</span></td>
+        <td class="note">Trigger or schedule the follow-up related to certification and the 30-day check-in, depending on the final process.</td>
       </tr>
     </tbody>
   </table>
-
-  <div class="open-items">
-    <div class="open-items-label">Open items — needed before this playbook is complete</div>
-    <p>1. Escalation path during install: what the hotel handles vs what goes to OPS.</p>
-    <p>2. Post-install email template: needs to be written.</p>
-    <p>3. 30-day check-in: decide if it is standard for all members or triggered by issues only.</p>
+  <div class="phase-header">
+    <span class="phase-num">Phase 04</span>
+    <h2 class="phase-title">Process Workflow</h2>
+    <span class="phase-goal">Show the full process from kickoff readiness to completion and certification follow-up.</span>
   </div>
 
+  <table class="playbook-table">
+    <thead><tr><th>#</th><th>Where</th><th>Owner</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="step-num">01</td>
+        <td><span class="where w-notion">Notion / Configuration</span></td>
+        <td><span class="owner-ops">OPS</span></td>
+        <td class="note">Configuration stage is completed. Hardware is shipped, account is created, and room list is confirmed. Hotel is marked as ready for kickoff.</td>
+      </tr>
+      <tr>
+        <td class="step-num">02</td>
+        <td><span class="where w-notion">Internal prep</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">OPS completes the pre-call checks, confirms delivery, verifies account setup, and sends the pre-call materials.</td>
+      </tr>
+      <tr>
+        <td class="step-num">03</td>
+        <td><span class="where w-call">Live call</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Kickoff call takes place. Installation flow is explained, responsibilities are confirmed, documentation requirements are set, certification is introduced, and the installation deadline is agreed.</td>
+      </tr>
+      <tr>
+        <td class="step-num">04</td>
+        <td><span class="where w-app">Email / App</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Hotel carries out the installation according to the agreed plan and contacts Valpas if exceptions or blockers appear.</td>
+      </tr>
+      <tr>
+        <td class="step-num">05</td>
+        <td><span class="where w-dashboard">Dashboard / Hotel updates</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">OPS monitors progress toward the agreed deadline and supports the hotel as needed during the installation period.</td>
+      </tr>
+      <tr>
+        <td class="step-num">06</td>
+        <td><span class="where w-email">Email / Shared media</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Hotel confirms completion and sends the agreed installation documentation for review.</td>
+      </tr>
+      <tr>
+        <td class="step-num">07</td>
+        <td><span class="where w-dashboard">Dashboard / Documentation review</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">OPS verifies room status and reviews the documentation to confirm that the installation was completed correctly.</td>
+      </tr>
+      <tr>
+        <td class="step-num">08</td>
+        <td><span class="where w-email">Email / Notion</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Post-install confirmation is sent, installation is marked complete, and the account is handed off for certification-related follow-up and ongoing support.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="phase-header">
+    <span class="phase-num">Phase 05</span>
+    <h2 class="phase-title">Troubleshooting</h2>
+    <span class="phase-goal">Make it clear what the hotel can try first and what must be escalated.</span>
+  </div>
+
+  <table class="playbook-table">
+    <thead><tr><th>#</th><th>Where</th><th>Owner</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="step-num">01</td>
+        <td><span class="where w-call">Live call / Guide</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">Explain the basic troubleshooting rules during the kickoff call so the hotel knows what to do before contacting Valpas.</td>
+      </tr>
+      <tr>
+        <td class="step-num">02</td>
+        <td><span class="where w-app">App</span></td>
+        <td><span class="owner-hotel">Hotel / OPS / CSM</span></td>
+        <td class="note">If a cassette does not blink as expected, remove it and reinsert it carefully, then check again. If the issue continues, escalate to OPS.</td>
+      </tr>
+      <tr>
+        <td class="step-num">03</td>
+        <td><span class="where w-app">App</span></td>
+        <td><span class="owner-hotel">Hotel / OPS / CSM</span></td>
+        <td class="note">If a room appears offline, first check whether there are open tasks or whether the installation was completed fully. If the room stays offline, follow the routing device guidance or escalate if needed.</td>
+      </tr>
+      <tr>
+        <td class="step-num">04</td>
+        <td><span class="where w-app">App</span></td>
+        <td><span class="owner-hotel">Hotel / OPS / CSM</span></td>
+        <td class="note">If the router shows a red status or appears not to work, restart it first. If the issue remains after restart, escalate to OPS.</td>
+      </tr>
+      <tr>
+        <td class="step-num">05</td>
+        <td><span class="where w-app">Email / App</span></td>
+        <td><span class="owner-hotel">Hotel / OPS / CSM</span></td>
+        <td class="note">If a bed or room does not match the expected setup, stop in that room, take pictures, and contact Valpas before continuing.</td>
+      </tr>
+      <tr>
+        <td class="step-num">06</td>
+        <td><span class="where w-app">Email / App</span></td>
+        <td><span class="owner-hotel">Hotel / OPS / CSM</span></td>
+        <td class="note">If hardware is missing, damaged, or incompatible, document the issue with pictures and escalate to OPS for next steps.</td>
+      </tr>
+      <tr>
+        <td class="step-num">07</td>
+        <td><span class="where w-dashboard">Dashboard</span></td>
+        <td><span class="owner-both">OPS / CSM</span></td>
+        <td class="note">OPS reviews the issue, decides whether the hotel can continue, and gives the next action. This may include remote troubleshooting, additional guidance, or replacement planning.</td>
+      </tr>
+    </tbody>
+  </table>
 
 </main>
 
