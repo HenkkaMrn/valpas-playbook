@@ -232,6 +232,13 @@
     background: rgba(7,10,25,0.09);
     color: rgba(7,10,25,0.85);
   }
+
+  .n-hotel   { background: #0f1a12; border-color: rgba(100,200,140,0.2); }
+  .n-hotel   .node-label { color: #6dc88a; }
+  .n-followup{ background: #0d1322; border-color: rgba(228,241,252,0.15); }
+  .n-followup .node-label { color: #a8d4f0; }
+  .n-verify  { background: #0e1325; border-color: rgba(220,217,255,0.18); }
+  .n-verify  .node-label { color: #c4c1ff; }
 </style>
 </head>
 <body>
@@ -251,76 +258,105 @@
 <main>
   <!-- FLOWCHART -->
   <h2 class="flow-heading">Process Flowchart</h2>
-  <p class="flow-sub">What triggers what — from configuration flag to installation closed</p>
+  <p class="flow-sub">What triggers what, from kickoff readiness to verified completion and certification follow-up</p>
 
-  <div class="flow">
+    <div class="flow">
 
     <div class="node n-start">
       <div class="node-label">Start · Notion</div>
       <div class="node-title">Configuration stage complete</div>
-      <div class="node-sub">Hardware shipped · Room list received · Account created in Upkeep · Gateway configured and paired</div>
+      <div class="node-sub">Hardware shipped · Room list received · Account created in UpKeep · Gateway configured and paired</div>
     </div>
 
-    <div class="connector">↓ <span class="connector-label">flags as ready for kickoff</span></div>
+    <div class="connector">↓ <span class="connector-label">hotel marked as ready for kickoff</span></div>
 
     <div class="node n-before">
-      <div class="node-label">Before · OPS</div>
-      <div class="node-title">Pre-call checklist</div>
-      <div class="node-sub">① Confirm hardware delivered &nbsp;·&nbsp; ② Impersonate account on Dashboard — verify access &nbsp;·&nbsp; ③ Confirm room list complete &nbsp;·&nbsp; ④ Send pre-call email (guide + app links + Calendly)</div>
+      <div class="node-label">Before · OPS / CSM</div>
+      <div class="node-title">Pre-call preparation</div>
+      <div class="node-sub">① Confirm hardware delivered &nbsp;·&nbsp; ② Verify account setup in Dashboard &nbsp;·&nbsp; ③ Confirm room list and bed setup &nbsp;·&nbsp; ④ Send pre-call email with guide, app links, and meeting link</div>
     </div>
 
-    <div class="connector">↓ <span class="connector-label">hotel books via Calendly</span></div>
+    <div class="connector">↓ <span class="connector-label">kickoff call is scheduled</span></div>
 
     <div class="node n-during">
       <div class="node-label">During · OPS / CSM</div>
       <div class="node-title">Kickoff call</div>
-      <div class="node-sub">Router setup · App login · Installation Mode · Leg placement rules · Pairing steps · Wall mount if needed · Routing devices only if offline · What done looks like · Escalation path</div>
+      <div class="node-sub">Explain installation flow · Confirm responsibilities · Review router and app setup · Review leg and wall mount rules · Explain documentation requirement · Agree on installation deadline · Introduce certification goal · Explain escalation path</div>
     </div>
 
-    <div class="connector">↓ <span class="connector-label">hotel performs installation</span></div>
+    <div class="connector">↓ <span class="connector-label">hotel starts installation</span></div>
+
+    <div class="node n-hotel">
+      <div class="node-label">Installation Period · Hotel</div>
+      <div class="node-title">Hotel performs installation</div>
+      <div class="node-sub">Install room by room according to the agreed plan · Contact Valpas if issues or exceptions appear</div>
+    </div>
+
+    <div class="connector">↓ <span class="connector-label">OPS monitors progress</span></div>
+
+    <div class="node n-followup">
+      <div class="node-label">Follow Up · OPS / CSM</div>
+      <div class="node-title">Progress follow-up</div>
+      <div class="node-sub">Monitor installation progress toward the agreed deadline · Follow up proactively if progress is unclear or issues appear</div>
+    </div>
+
+    <div class="connector">↓ <span class="connector-label">hotel confirms completion</span></div>
+
+    <div class="node n-hotel">
+      <div class="node-label">Completion Checkpoint · Hotel</div>
+      <div class="node-title">Installation complete</div>
+      <div class="node-sub">Hotel confirms the last room is done · Hotel sends agreed pictures or other installation documentation</div>
+    </div>
+
+    <div class="connector">↓ <span class="connector-label">OPS reviews completion</span></div>
+
+    <div class="node n-verify">
+      <div class="node-label">Verification · OPS / CSM</div>
+      <div class="node-title">Installation review</div>
+      <div class="node-sub">Review dashboard status · Review submitted documentation · Confirm all rooms are visible, active, online, and correctly installed</div>
+    </div>
+
+    <div class="connector">↓ <span class="connector-label">decision point</span></div>
 
     <div class="node n-decision">
-      <div class="node-label">Decision · Dashboard + Hotel confirmation</div>
-      <div class="node-title">Are all rooms online and hotel confirms done?</div>
+      <div class="node-label">Decision · OPS / CSM</div>
+      <div class="node-title">Was the installation completed correctly?</div>
     </div>
 
     <div class="connector">↓</div>
 
     <div class="branch-grid">
       <div>
-        <span class="branch-tag bt-yes">✓ Yes — all good</span>
+        <span class="branch-tag bt-yes">✓ Yes — verified</span>
         <div class="node n-success">
-          <div class="node-label">After · OPS / CSM</div>
-          <div class="node-title">Close installation</div>
-          <div class="node-sub">Send post-install email · Mark complete in Notion · Hand off to CS (May / Salah) · Schedule 30-day check-in (TBD)</div>
+          <div class="node-label">Close Out · OPS / CSM</div>
+          <div class="node-title">Verified completion</div>
+          <div class="node-sub">Send post-install confirmation · Confirm next steps toward certification readiness · Mark installation complete in Notion · Hand off to CS for ongoing support and certification-related follow-up</div>
         </div>
       </div>
       <div>
         <span class="branch-tag bt-no">✗ No — issues found</span>
-        <div class="branch-stack">
-          <div class="node n-fail">
-            <div class="node-label">Diagnose · OPS</div>
-            <div class="node-title">What is the issue?</div>
-            <div class="node-sub">Room offline · Cassette not pairing · Router red · Hardware missing or damaged</div>
-          </div>
-          <div class="node n-tbd">
-            <div class="node-label">⚠ To design — Hotel self-resolves</div>
-            <div class="node-title">Minor issues</div>
-            <div class="node-sub">Offline room → check open tasks + add routing device · Cassette not blinking → reinsert</div>
-          </div>
-          <div class="node n-tbd">
-            <div class="node-label">⚠ To design — Escalate to OPS</div>
-            <div class="node-title">Bigger issues</div>
-            <div class="node-sub">Router red after restart · Missing hardware · Pairing failure after repeated attempts · Trigger: follow-up call or troubleshooting email</div>
-          </div>
+        <div class="node n-fail">
+          <div class="node-label">Issue Resolution · OPS / CSM + Hotel</div>
+          <div class="node-title">Issues found</div>
+          <div class="node-sub">Follow up with hotel · Clarify missing or incorrect setup · Request additional pictures or corrections · Recheck dashboard status and documentation before closure</div>
         </div>
       </div>
     </div>
 
   </div>
 
-  <div class="legend">
+    <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#0b1028;border:1px solid rgba(255,173,50,0.35)"></div> Start / Trigger</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0d1220;border:1px solid rgba(228,241,252,0.2)"></div> Before (OPS / CSM prep)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0d1420;border:1px solid rgba(220,217,255,0.2)"></div> During (kickoff call)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0f1a12;border:1px solid rgba(100,200,140,0.2)"></div> Hotel action</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0d1322;border:1px solid rgba(228,241,252,0.15)"></div> Progress follow-up</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0e1325;border:1px solid rgba(220,217,255,0.18)"></div> Verification</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#111526;border:1px solid rgba(251,247,244,0.14);border-style:dashed"></div> Decision point</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0d1a15;border:1px solid rgba(100,200,140,0.3)"></div> Successful close</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1a1015;border:1px solid rgba(255,100,100,0.25)"></div> Issue path</div>
+  </div> Start / Trigger</div>
     <div class="legend-item"><div class="legend-dot" style="background:#0d1220;border:1px solid rgba(228,241,252,0.2)"></div> Before (OPS prep)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#0d1420;border:1px solid rgba(220,217,255,0.2)"></div> During (live call)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#111526;border:1px solid rgba(251,247,244,0.14);border-style:dashed"></div> Decision point</div>
