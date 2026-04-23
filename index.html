@@ -222,9 +222,9 @@
 </div>
 
 <nav class="page-nav">
-  <a href="#playbook" class="active">Playbook</a>
-  <a href="#flowchart">Flowchart</a>
-  <a href="#agenda">Agenda</a>
+  <a href="index.html" class="active">Playbook</a>
+  <a href="flowchart.html">Flowchart</a>
+  <a href="agenda.html">Agenda</a>
 </nav>
 
 <main>
@@ -406,127 +406,6 @@
     <p>2. Post-install email template: needs to be written.</p>
     <p>3. 30-day check-in: decide if it is standard for all members or triggered by issues only.</p>
   </div>
-
-  <div class="section-divider"></div>
-
-  <!-- FLOWCHART -->
-  <h2 class="flow-heading" id="flowchart">Process Flowchart</h2>
-  <p class="flow-sub">What triggers what — from configuration flag to installation closed</p>
-
-  <div class="flow">
-
-    <div class="node n-start">
-      <div class="node-label">Start · Notion</div>
-      <div class="node-title">Configuration stage complete</div>
-      <div class="node-sub">Hardware shipped · Room list received · Account created in Upkeep · Gateway configured and paired</div>
-    </div>
-
-    <div class="connector">↓ <span class="connector-label">flags as ready for kickoff</span></div>
-
-    <div class="node n-before">
-      <div class="node-label">Before · OPS</div>
-      <div class="node-title">Pre-call checklist</div>
-      <div class="node-sub">① Confirm hardware delivered &nbsp;·&nbsp; ② Impersonate account on Dashboard — verify access &nbsp;·&nbsp; ③ Confirm room list complete &nbsp;·&nbsp; ④ Send pre-call email (guide + app links + Calendly)</div>
-    </div>
-
-    <div class="connector">↓ <span class="connector-label">hotel books via Calendly</span></div>
-
-    <div class="node n-during">
-      <div class="node-label">During · OPS / CSM</div>
-      <div class="node-title">Kickoff call</div>
-      <div class="node-sub">Router setup · App login · Installation Mode · Leg placement rules · Pairing steps · Wall mount if needed · Routing devices only if offline · What done looks like · Escalation path</div>
-    </div>
-
-    <div class="connector">↓ <span class="connector-label">hotel performs installation</span></div>
-
-    <div class="node n-decision">
-      <div class="node-label">Decision · Dashboard + Hotel confirmation</div>
-      <div class="node-title">Are all rooms online and hotel confirms done?</div>
-    </div>
-
-    <div class="connector">↓</div>
-
-    <div class="branch-grid">
-      <div>
-        <span class="branch-tag bt-yes">✓ Yes — all good</span>
-        <div class="node n-success">
-          <div class="node-label">After · OPS / CSM</div>
-          <div class="node-title">Close installation</div>
-          <div class="node-sub">Send post-install email · Mark complete in Notion · Hand off to CS (May / Salah) · Schedule 30-day check-in (TBD)</div>
-        </div>
-      </div>
-      <div>
-        <span class="branch-tag bt-no">✗ No — issues found</span>
-        <div class="branch-stack">
-          <div class="node n-fail">
-            <div class="node-label">Diagnose · OPS</div>
-            <div class="node-title">What is the issue?</div>
-            <div class="node-sub">Room offline · Cassette not pairing · Router red · Hardware missing or damaged</div>
-          </div>
-          <div class="node n-tbd">
-            <div class="node-label">⚠ To design — Hotel self-resolves</div>
-            <div class="node-title">Minor issues</div>
-            <div class="node-sub">Offline room → check open tasks + add routing device · Cassette not blinking → reinsert</div>
-          </div>
-          <div class="node n-tbd">
-            <div class="node-label">⚠ To design — Escalate to OPS</div>
-            <div class="node-title">Bigger issues</div>
-            <div class="node-sub">Router red after restart · Missing hardware · Pairing failure after repeated attempts · Trigger: follow-up call or troubleshooting email</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#0b1028;border:1px solid rgba(255,173,50,0.35)"></div> Start / Trigger</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0d1220;border:1px solid rgba(228,241,252,0.2)"></div> Before (OPS prep)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0d1420;border:1px solid rgba(220,217,255,0.2)"></div> During (live call)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#111526;border:1px solid rgba(251,247,244,0.14);border-style:dashed"></div> Decision point</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0d1a15;border:1px solid rgba(100,200,140,0.3)"></div> Successful close</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#1a1015;border:1px solid rgba(255,100,100,0.25)"></div> Issue / failure path</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#181510;border:1px solid rgba(255,173,50,0.25);border-style:dashed"></div> To be designed</div>
-  </div>
-
-  <div class="section-divider" id="agenda"></div>
-
-  <div class="phase-header">
-    <span class="phase-num">Agenda</span>
-    <h2 class="phase-title">Kickoff Call</h2>
-    <span class="phase-goal">30 min total — structured, confident, clear.</span>
-  </div>
-
-  <table class="playbook-table">
-    <thead><tr><th>#</th><th>Topic</th><th>Duration</th><th>Key Points</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="step-num">01</td>
-        <td>Introduction</td>
-        <td class="note">3 min</td>
-        <td class="note">Quick intros. Ask each person their role. Helps me tailor the rest of the call.</td>
-      </tr>
-      <tr>
-        <td class="step-num">02</td>
-        <td>Certification</td>
-        <td class="note">7 min</td>
-        <td class="note">Couple slides: what Valpas Certification is, what value it brings to your hotel brand, making sure that these benefits will be unlocked as soon as they can install the system.</td>
-      </tr>
-      <tr>
-        <td class="step-num">03</td>
-        <td>Installation Walkthrough</td>
-        <td class="note">15 min</td>
-        <td class="note">Review the configuration together (bed counts, installation type, room environment) and flag anything unclear. Then walk step by step through the installation, from unboxing and setup to pairing and app checks.</td>
-      </tr>
-      <tr>
-        <td class="step-num">04</td>
-        <td>Q&amp;A + Next Steps</td>
-        <td class="note">5 min</td>
-        <td class="note">Confirm the planned installation start date with the customer and ensure they have everything ready to begin. Reassure them that I'll be available for support throughout the process if any questions come up. Before closing, align on a follow-up checkpoint (1–2 weeks later) to review progress and keep the installation moving forward.</td>
-      </tr>
-    </tbody>
-  </table>
-
 
 </main>
 
