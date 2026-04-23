@@ -216,114 +216,120 @@
     color: rgba(7,10,25,0.85);
   }
 
-  /* ── LIGHT MODE ─────────────────────────────────────────── */
-  body.light {
-    --black:    #F5F3EF;
-    --surface:  #FFFFFF;
-    --surface2: #EDEAE5;
-    --border:   rgba(7,10,25,0.09);
-    --muted:    rgba(7,10,25,0.45);
-    --text:     #070A19;
-    --off-white:#070A19;
-  }
-  body.light .playbook-table thead tr { background: var(--surface2); }
-  body.light .open-items { background: rgba(255,173,50,0.06); }
-  body.light .n-start,
-  body.light .n-before,
-  body.light .n-during,
-  body.light .n-hotel,
-  body.light .n-followup,
-  body.light .n-verify,
-  body.light .n-decision,
-  body.light .n-success,
-  body.light .n-fail,
-  body.light .n-tbd { background: rgba(255,255,255,0.7); }
+  <div class="agenda-cards">
 
-  /* ── THEME TOGGLE ────────────────────────────────────────── */
-  .theme-toggle {
-    margin-left: auto;
-    background: none; border: 1px solid rgba(7,10,25,0.18);
-    border-radius: 100px; padding: 5px 14px;
-    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-    font-weight: 600; color: rgba(7,10,25,0.5);
-    cursor: pointer; font-family: inherit; transition: opacity 0.15s;
-  }
-  .theme-toggle:hover { opacity: 0.7; }
+    <!-- 01 -->
+    <div class="agenda-card">
+      <div class="agenda-card-head">
+        <span class="agenda-step">01</span>
+        <span class="agenda-title">Introduction &amp; Roles</span>
+        <span class="agenda-duration">3 min</span>
+      </div>
+      <div class="agenda-card-body">
+        <div class="agenda-goal">Goal: <span>Establish ownership early</span></div>
+        <ul class="agenda-list">
+          <li>Quick introductions (Manager &amp; Maintenance)</li>
+          <li>Confirm who will lead the installation</li>
+          <li>Set expectations for the call</li>
+        </ul>
+        <div class="agenda-outcome">👉 Outcome: One clear responsible person identified</div>
+      </div>
+    </div>
 
-  /* ── MOBILE ──────────────────────────────────────────────── */
-  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    <!-- 02 -->
+    <div class="agenda-card">
+      <div class="agenda-card-head">
+        <span class="agenda-step">02</span>
+        <span class="agenda-title">Certification &amp; End Goal</span>
+        <span class="agenda-duration">5–7 min</span>
+      </div>
+      <div class="agenda-card-body">
+        <div class="agenda-goal">Goal: <span>Create motivation to complete installation</span></div>
+        <ul class="agenda-list">
+          <li>What Valpas Certification is</li>
+          <li>Why it matters for the hotel (brand, guest trust)</li>
+          <li>What needs to happen to achieve it</li>
+        </ul>
+        <div class="agenda-outcome">👉 Outcome: Customer understands why finishing installation matters</div>
+      </div>
+    </div>
 
-  @media (max-width: 768px) {
-    .gradient-band { padding: 32px 20px 24px; }
-    .header-title  { font-size: 34px; }
-    .header-badge  { position: static; display: inline-block; margin-top: 14px; }
-    main           { padding: 36px 16px; }
-    .phase-header  { flex-wrap: wrap; gap: 8px; }
-    .phase-goal    { margin-left: 0; white-space: normal; width: 100%; }
-    footer         { padding: 24px 20px; flex-direction: column; gap: 10px; text-align: center; }
-    .site-nav      { flex-wrap: wrap; gap: 6px; }
-    .theme-toggle  { margin-left: 0; }
-    .branch-grid   { grid-template-columns: 1fr; }
-  }
+    <!-- 03 -->
+    <div class="agenda-card">
+      <div class="agenda-card-head">
+        <span class="agenda-step">03</span>
+        <span class="agenda-title">Installation Planning &amp; Walkthrough</span>
+        <span class="agenda-duration">15 min</span>
+      </div>
+      <div class="agenda-card-body">
+        <div class="agenda-goal">Goal: <span>Remove blockers + prepare them to start</span></div>
 
-  /* ── LIGHT MODE FIXES ───────────────────────────────────── */
-  body.light .open-items p { color: rgba(7,10,25,0.65); }
-  body.light .open-items { background: rgba(255,173,50,0.08); border-color: rgba(255,173,50,0.3); }
-  body.light .open-items-label { color: #c47e00; }
-  body.light .status-tbd { color: #c47e00; }
-  body.light .note { color: rgba(7,10,25,0.55); }
-  body.light .step-num { color: rgba(7,10,25,0.4); }
-  body.light .section-intro { color: rgba(7,10,25,0.55); }
-  body.light .phase-goal { color: rgba(7,10,25,0.45); }
-  body.light .phase-num { color: #c47e00; }
-  body.light .connector { color: rgba(7,10,25,0.4); }
-  body.light .connector-label { color: rgba(7,10,25,0.4); }
-  body.light .flow-sub { color: rgba(7,10,25,0.45); }
-  body.light .node-sub { color: rgba(7,10,25,0.55); }
-  body.light .node-title { color: #070A19; }
-  body.light .legend-item { color: rgba(7,10,25,0.6); }
-  /* Keep legend dots visible by using border as the color indicator */
-  body.light .legend-dot { opacity: 1; outline: 1px solid rgba(7,10,25,0.12); }
-  body.light .n-start   { background: #f5f0e8; border-color: rgba(180,120,0,0.4); }
-  body.light .n-before  { background: #edf3f8; border-color: rgba(100,160,210,0.4); }
-  body.light .n-during  { background: #f0eef8; border-color: rgba(150,140,220,0.4); }
-  body.light .n-hotel   { background: #edf7f1; border-color: rgba(60,160,100,0.35); }
-  body.light .n-followup{ background: #edf3f8; border-color: rgba(100,160,210,0.3); }
-  body.light .n-verify  { background: #f0eef8; border-color: rgba(150,140,220,0.3); }
-  body.light .n-decision{ background: #f4f3f2; border-color: rgba(7,10,25,0.2); }
-  body.light .n-success { background: #edf7f2; border-color: rgba(60,160,100,0.4); }
-  body.light .n-fail    { background: #fdf0f0; border-color: rgba(200,80,80,0.35); }
-  body.light .n-tbd     { background: #fdf6ec; border-color: rgba(180,120,0,0.3); }
-  body.light .n-start .node-label   { color: #c47e00; }
-  body.light .n-before .node-label  { color: #4a8ab0; }
-  body.light .n-during .node-label  { color: #6e6ab0; }
-  body.light .n-hotel .node-label   { color: #3a9060; }
-  body.light .n-followup .node-label{ color: #4a8ab0; }
-  body.light .n-verify .node-label  { color: #6e6ab0; }
-  body.light .n-decision .node-label{ color: rgba(7,10,25,0.5); }
-  body.light .n-success .node-label { color: #3a9060; }
-  body.light .n-fail .node-label    { color: #c05050; }
-  body.light .n-tbd .node-label     { color: #c47e00; }
-  body.light .w-notion    { background: rgba(7,10,25,0.05); color: #070A19; border-color: rgba(7,10,25,0.18); }
-  body.light .w-dashboard { background: rgba(180,120,0,0.08); color: #9a6800; border-color: rgba(180,120,0,0.3); }
-  body.light .w-app       { background: rgba(100,90,200,0.07); color: #5550a0; border-color: rgba(100,90,200,0.25); }
-  body.light .w-email     { background: rgba(60,130,190,0.07); color: #2a6a9a; border-color: rgba(60,130,190,0.25); }
-  body.light .w-call      { background: rgba(200,100,50,0.07); color: #a05020; border-color: rgba(200,100,50,0.25); }
-  body.light .owner-ops   { color: #9a6800; }
-  body.light .owner-csm   { color: #2a6a9a; }
-  body.light .owner-both  { color: #3a3a3a; }
-  body.light .owner-hotel { color: rgba(7,10,25,0.45); }
-  body.light footer span  { color: rgba(7,10,25,0.4); }
-  body.light footer { border-top-color: rgba(7,10,25,0.1); }
-  body.light .step-title  { color: #070A19; }
-  body.light .bt-yes { background: rgba(60,160,100,0.1); color: #3a8060; border-color: rgba(60,160,100,0.3); }
-  body.light .bt-no  { background: rgba(200,80,80,0.1);  color: #a04040; border-color: rgba(200,80,80,0.3); }
+        <div class="agenda-part-label">Part 1 — Validate Setup</div>
+        <ul class="agenda-list">
+          <li>Review configuration:
+            <ul class="agenda-sublist">
+              <li>Bed count</li>
+              <li>Installation type</li>
+              <li>Room setup</li>
+            </ul>
+          </li>
+          <li>Flag any missing or unclear information</li>
+        </ul>
 
-  /* ── HEADER ALWAYS DARK (gradient band is always light) ─── */
-  .header-title            { color: #070A19 !important; }
-  .header-title em         { color: rgba(7,10,25,0.45) !important; }
-  .header-meta             { color: rgba(7,10,25,0.45) !important; }
-  .header-badge            { color: rgba(7,10,25,0.45) !important; border-color: rgba(7,10,25,0.18) !important; }
+        <div class="agenda-part-label">Part 2 — Walkthrough</div>
+        <ul class="agenda-list">
+          <li>Installation steps:
+            <ul class="agenda-sublist">
+              <li>Unboxing</li>
+              <li>Physical installation</li>
+              <li>Gateway setup</li>
+              <li>Pairing &amp; app check</li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="agenda-part-label">Part 3 — Reality Alignment</div>
+        <ul class="agenda-list">
+          <li>Clarify effort required (not plug &amp; play)</li>
+          <li>Discuss expected pace (rooms/day)</li>
+        </ul>
+
+        <div class="agenda-outcome">👉 Outcome: Customer understands what to do and how to do it</div>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="agenda-card">
+      <div class="agenda-card-head">
+        <span class="agenda-step">04</span>
+        <span class="agenda-title">Start Plan &amp; Next Steps</span>
+        <span class="agenda-duration">5–7 min</span>
+      </div>
+      <div class="agenda-card-body">
+        <div class="agenda-goal">Goal: <span>Force commitment <strong style="color:rgba(255,173,50,0.9)">(IMPORTANT)</strong></span></div>
+        <ul class="agenda-list">
+          <li>Confirm:
+            <ul class="agenda-sublist">
+              <li>Installation start date</li>
+              <li>Responsible person</li>
+            </ul>
+          </li>
+          <li>Ensure readiness:
+            <ul class="agenda-sublist">
+              <li>Tools / access / time availability</li>
+            </ul>
+          </li>
+          <li>Define support:
+            <ul class="agenda-sublist">
+              <li>How to contact you</li>
+            </ul>
+          </li>
+          <li>Agree on follow-up checkpoint (1–2 weeks)</li>
+        </ul>
+        <div class="agenda-outcome">👉 Outcome: Customer leaves with a clear start plan</div>
+      </div>
+    </div>
+
 </style>
 </head>
 <body>
@@ -351,35 +357,120 @@
     <span class="phase-goal">30 min total — structured, confident, clear.</span>
   </div>
 
-  <div class="table-wrap"><table class="playbook-table">
-    <thead><tr><th>#</th><th>Topic</th><th>Duration</th><th>Key Points</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="step-num">01</td>
-        <td>Introduction</td>
-        <td class="note">3 min</td>
-        <td class="note">Quick intros. Ask each person their role. Helps me tailor the rest of the call.</td>
-      </tr>
-      <tr>
-        <td class="step-num">02</td>
-        <td>Certification</td>
-        <td class="note">7 min</td>
-        <td class="note">Couple slides: what Valpas Certification is, what value it brings to your hotel brand, making sure that these benefits will be unlocked as soon as they can install the system.</td>
-      </tr>
-      <tr>
-        <td class="step-num">03</td>
-        <td>Installation Walkthrough</td>
-        <td class="note">15 min</td>
-        <td class="note">Review the configuration together (bed counts, installation type, room environment) and flag anything unclear. Then walk step by step through the installation, from unboxing and setup to pairing and app checks.</td>
-      </tr>
-      <tr>
-        <td class="step-num">04</td>
-        <td>Q&amp;A + Next Steps</td>
-        <td class="note">5 min</td>
-        <td class="note">Confirm the planned installation start date with the customer and ensure they have everything ready to begin. Reassure them that I'll be available for support throughout the process if any questions come up. Before closing, align on a follow-up checkpoint (1–2 weeks later) to review progress and keep the installation moving forward.</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="agenda-cards">
+
+    <!-- 01 -->
+    <div class="agenda-card">
+      <div class="agenda-card-head">
+        <span class="agenda-step">01</span>
+        <span class="agenda-title">Introduction &amp; Roles</span>
+        <span class="agenda-duration">3 min</span>
+      </div>
+      <div class="agenda-card-body">
+        <div class="agenda-goal">Goal: <span>Establish ownership early</span></div>
+        <ul class="agenda-list">
+          <li>Quick introductions (Manager &amp; Maintenance)</li>
+          <li>Confirm who will lead the installation</li>
+          <li>Set expectations for the call</li>
+        </ul>
+        <div class="agenda-outcome">👉 Outcome: One clear responsible person identified</div>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="agenda-card">
+      <div class="agenda-card-head">
+        <span class="agenda-step">02</span>
+        <span class="agenda-title">Certification &amp; End Goal</span>
+        <span class="agenda-duration">5–7 min</span>
+      </div>
+      <div class="agenda-card-body">
+        <div class="agenda-goal">Goal: <span>Create motivation to complete installation</span></div>
+        <ul class="agenda-list">
+          <li>What Valpas Certification is</li>
+          <li>Why it matters for the hotel (brand, guest trust)</li>
+          <li>What needs to happen to achieve it</li>
+        </ul>
+        <div class="agenda-outcome">👉 Outcome: Customer understands why finishing installation matters</div>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="agenda-card">
+      <div class="agenda-card-head">
+        <span class="agenda-step">03</span>
+        <span class="agenda-title">Installation Planning &amp; Walkthrough</span>
+        <span class="agenda-duration">15 min</span>
+      </div>
+      <div class="agenda-card-body">
+        <div class="agenda-goal">Goal: <span>Remove blockers + prepare them to start</span></div>
+
+        <div class="agenda-part-label">Part 1 — Validate Setup</div>
+        <ul class="agenda-list">
+          <li>Review configuration:
+            <ul class="agenda-sublist">
+              <li>Bed count</li>
+              <li>Installation type</li>
+              <li>Room setup</li>
+            </ul>
+          </li>
+          <li>Flag any missing or unclear information</li>
+        </ul>
+
+        <div class="agenda-part-label">Part 2 — Walkthrough</div>
+        <ul class="agenda-list">
+          <li>Installation steps:
+            <ul class="agenda-sublist">
+              <li>Unboxing</li>
+              <li>Physical installation</li>
+              <li>Gateway setup</li>
+              <li>Pairing &amp; app check</li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="agenda-part-label">Part 3 — Reality Alignment</div>
+        <ul class="agenda-list">
+          <li>Clarify effort required (not plug &amp; play)</li>
+          <li>Discuss expected pace (rooms/day)</li>
+        </ul>
+
+        <div class="agenda-outcome">👉 Outcome: Customer understands what to do and how to do it</div>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="agenda-card">
+      <div class="agenda-card-head">
+        <span class="agenda-step">04</span>
+        <span class="agenda-title">Start Plan &amp; Next Steps</span>
+        <span class="agenda-duration">5–7 min</span>
+      </div>
+      <div class="agenda-card-body">
+        <div class="agenda-goal">Goal: <span>Force commitment <strong style="color:rgba(255,173,50,0.9)">(IMPORTANT)</strong></span></div>
+        <ul class="agenda-list">
+          <li>Confirm:
+            <ul class="agenda-sublist">
+              <li>Installation start date</li>
+              <li>Responsible person</li>
+            </ul>
+          </li>
+          <li>Ensure readiness:
+            <ul class="agenda-sublist">
+              <li>Tools / access / time availability</li>
+            </ul>
+          </li>
+          <li>Define support:
+            <ul class="agenda-sublist">
+              <li>How to contact you</li>
+            </ul>
+          </li>
+          <li>Agree on follow-up checkpoint (1–2 weeks)</li>
+        </ul>
+        <div class="agenda-outcome">👉 Outcome: Customer leaves with a clear start plan</div>
+      </div>
+    </div>
+
   </div>
 
 </main>
