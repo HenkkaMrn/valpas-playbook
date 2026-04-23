@@ -348,6 +348,30 @@
   .header-title em         { color: rgba(7,10,25,0.45) !important; }
   .header-meta             { color: rgba(7,10,25,0.45) !important; }
   .header-badge            { color: rgba(7,10,25,0.45) !important; border-color: rgba(7,10,25,0.18) !important; }
+
+  /* LEGEND DOT COLORS — dark mode */
+  .ld-start    { background:#0b1028; border:1px solid rgba(255,173,50,0.35); }
+  .ld-before   { background:#0d1220; border:1px solid rgba(228,241,252,0.2); }
+  .ld-during   { background:#0d1420; border:1px solid rgba(220,217,255,0.2); }
+  .ld-hotel    { background:#0f1a12; border:1px solid rgba(100,200,140,0.2); }
+  .ld-followup { background:#0d1322; border:1px solid rgba(228,241,252,0.15); }
+  .ld-verify   { background:#0e1325; border:1px solid rgba(220,217,255,0.18); }
+  .ld-decision { background:#111526; border:1px dashed rgba(251,247,244,0.14); }
+  .ld-success  { background:#0d1a15; border:1px solid rgba(100,200,140,0.3); }
+  .ld-fail     { background:#1a1015; border:1px solid rgba(255,100,100,0.25); }
+  .ld-tbd      { background:#181510; border:1px dashed rgba(255,173,50,0.25); }
+
+  /* LEGEND DOT COLORS — light mode */
+  body.light .ld-start    { background:#f5f0e8; border-color:rgba(180,120,0,0.4); }
+  body.light .ld-before   { background:#edf3f8; border-color:rgba(100,160,210,0.4); }
+  body.light .ld-during   { background:#f0eef8; border-color:rgba(150,140,220,0.4); }
+  body.light .ld-hotel    { background:#edf7f1; border-color:rgba(60,160,100,0.35); }
+  body.light .ld-followup { background:#edf3f8; border-color:rgba(100,160,210,0.3); }
+  body.light .ld-verify   { background:#f0eef8; border-color:rgba(150,140,220,0.3); }
+  body.light .ld-decision { background:#f4f3f2; border-color:rgba(7,10,25,0.2); }
+  body.light .ld-success  { background:#edf7f1; border-color:rgba(60,160,100,0.35); }
+  body.light .ld-fail     { background:#f8edec; border-color:rgba(200,80,80,0.35); }
+  body.light .ld-tbd      { background:#f7f3e8; border-color:rgba(180,120,0,0.3); }
 </style>
 </head>
 <body>
@@ -460,22 +484,17 @@
   </div>
 
     <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#0b1028;border:1px solid rgba(255,173,50,0.35)"></div> Start / Trigger</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0d1220;border:1px solid rgba(228,241,252,0.2)"></div> Before (OPS / CSM prep)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0d1420;border:1px solid rgba(220,217,255,0.2)"></div> During (kickoff call)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0f1a12;border:1px solid rgba(100,200,140,0.2)"></div> Hotel action</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0d1322;border:1px solid rgba(228,241,252,0.15)"></div> Progress follow-up</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0e1325;border:1px solid rgba(220,217,255,0.18)"></div> Verification</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#111526;border:1px solid rgba(251,247,244,0.14);border-style:dashed"></div> Decision point</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0d1a15;border:1px solid rgba(100,200,140,0.3)"></div> Successful close</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#1a1015;border:1px solid rgba(255,100,100,0.25)"></div> Issue path</div>
-  </div> Start / Trigger</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0d1220;border:1px solid rgba(228,241,252,0.2)"></div> Before (OPS prep)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0d1420;border:1px solid rgba(220,217,255,0.2)"></div> During (live call)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#111526;border:1px solid rgba(251,247,244,0.14);border-style:dashed"></div> Decision point</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0d1a15;border:1px solid rgba(100,200,140,0.3)"></div> Successful close</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#1a1015;border:1px solid rgba(255,100,100,0.25)"></div> Issue / failure path</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#181510;border:1px solid rgba(255,173,50,0.25);border-style:dashed"></div> To be designed</div>
+    <div class="legend-item"><div class="legend-dot ld-start"></div> Start / Trigger</div>
+    <div class="legend-item"><div class="legend-dot ld-before"></div> Before (OPS / CSM prep)</div>
+    <div class="legend-item"><div class="legend-dot ld-during"></div> During (kickoff call)</div>
+    <div class="legend-item"><div class="legend-dot ld-hotel"></div> Hotel action</div>
+    <div class="legend-item"><div class="legend-dot ld-followup"></div> Progress follow-up</div>
+    <div class="legend-item"><div class="legend-dot ld-verify"></div> Verification</div>
+    <div class="legend-item"><div class="legend-dot ld-decision"></div> Decision point</div>
+    <div class="legend-item"><div class="legend-dot ld-success"></div> Successful close</div>
+    <div class="legend-item"><div class="legend-dot ld-fail"></div> Issue path</div>
+  </div>
+    <div class="legend-item"><div class="legend-dot ld-tbd"></div> To be designed</div>
   </div>
 </main>
 
