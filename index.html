@@ -195,6 +195,21 @@
   }
   footer img { height: 18px; opacity: 0.3; }
   footer span { font-size: 11px; color: var(--muted); font-style: italic; }
+
+  /* PAGE NAV */
+  .page-nav {
+    background: var(--surface2); border-bottom: 1px solid var(--border);
+    padding: 0 52px; display: flex; gap: 0;
+  }
+  .page-nav a {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; text-decoration: none;
+    padding: 16px 22px; display: inline-block; border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .page-nav a:hover { color: var(--off-white); }
+  .page-nav a.active { color: var(--yellow); border-bottom-color: var(--yellow); }
+
 </style>
 </head>
 <body>
@@ -206,10 +221,16 @@
   <div class="header-badge">Draft v1 · Apr 2026</div>
 </div>
 
+<nav class="page-nav">
+  <a href="#playbook" class="active">Playbook</a>
+  <a href="#flowchart">Flowchart</a>
+  <a href="#agenda">Agenda</a>
+</nav>
+
 <main>
 
   <!-- PHASE 1 -->
-  <div class="phase-header">
+  <div class="phase-header" id="playbook">
     <span class="phase-num">Phase 01</span>
     <h2 class="phase-title">Before the Meeting</h2>
     <span class="phase-goal">Arrive ready. Hotel can start the day after the call.</span>
@@ -389,7 +410,7 @@
   <div class="section-divider"></div>
 
   <!-- FLOWCHART -->
-  <h2 class="flow-heading">Process Flowchart</h2>
+  <h2 class="flow-heading" id="flowchart">Process Flowchart</h2>
   <p class="flow-sub">What triggers what — from configuration flag to installation closed</p>
 
   <div class="flow">
@@ -467,6 +488,45 @@
     <div class="legend-item"><div class="legend-dot" style="background:#1a1015;border:1px solid rgba(255,100,100,0.25)"></div> Issue / failure path</div>
     <div class="legend-item"><div class="legend-dot" style="background:#181510;border:1px solid rgba(255,173,50,0.25);border-style:dashed"></div> To be designed</div>
   </div>
+
+  <div class="section-divider" id="agenda"></div>
+
+  <div class="phase-header">
+    <span class="phase-num">Agenda</span>
+    <h2 class="phase-title">Kickoff Call</h2>
+    <span class="phase-goal">30 min total — structured, confident, clear.</span>
+  </div>
+
+  <table class="playbook-table">
+    <thead><tr><th>#</th><th>Topic</th><th>Duration</th><th>Key Points</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="step-num">01</td>
+        <td>Introduction</td>
+        <td class="note">3 min</td>
+        <td class="note">Quick intros. Ask each person their role. Helps me tailor the rest of the call.</td>
+      </tr>
+      <tr>
+        <td class="step-num">02</td>
+        <td>Certification</td>
+        <td class="note">7 min</td>
+        <td class="note">Couple slides: what Valpas Certification is, what value it brings to your hotel brand, making sure that these benefits will be unlocked as soon as they can install the system.</td>
+      </tr>
+      <tr>
+        <td class="step-num">03</td>
+        <td>Installation Walkthrough</td>
+        <td class="note">15 min</td>
+        <td class="note">Review the configuration together (bed counts, installation type, room environment) and flag anything unclear. Then walk step by step through the installation, from unboxing and setup to pairing and app checks.</td>
+      </tr>
+      <tr>
+        <td class="step-num">04</td>
+        <td>Q&amp;A + Next Steps</td>
+        <td class="note">5 min</td>
+        <td class="note">Confirm the planned installation start date with the customer and ensure they have everything ready to begin. Reassure them that I'll be available for support throughout the process if any questions come up. Before closing, align on a follow-up checkpoint (1–2 weeks later) to review progress and keep the installation moving forward.</td>
+      </tr>
+    </tbody>
+  </table>
+
 
 </main>
 
