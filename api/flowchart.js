@@ -1,36 +1,52 @@
 /**
- * Valpas Flowchart API  —  uses Vercel KV (Upstash Redis REST)
+ * Valpas Flowchart API  —  uses Vercel Blob HTTP API directly
  *
  * No npm packages needed — only native fetch, same pattern as hotel.js
  *
- * Required env vars (auto-added when you connect a KV store in Vercel):
- *   KV_REST_API_URL    — e.g. https://xxxxx.upstash.io
- *   KV_REST_API_TOKEN  — Upstash REST token
- *   EDIT_PASSWORD      — the password you choose for the edit panel
+ * Required env vars (auto-added when you connect a Blob store in Vercel):
+ *   BLOB_READ_WRITE_TOKEN  — auto-set when you connect a Blob store
+ *   EDIT_PASSWORD          — the password you choose for the edit panel
  */
 
-const KV_URL   = process.env.KV_REST_API_URL;
-const KV_TOKEN = process.env.KV_REST_API_TOKEN;
-const EDIT_PW  = process.env.EDIT_PASSWORD;
-const KV_KEY   = 'valpas-flowchart';
+const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+const EDIT_PW    = process.env.EDIT_PASSWORD;
+const BLOB_BASE  = 'https://blob.vercel-storage.com';
+const BLOB_FILE  = 'valpas-flowchart-data.json';
 
-// ── Upstash REST helper ──────────────────────────────────────────
-async function kvGet(key) {
-  const r = await fetch(`${KV_URL}/get/${key}`, {
-    headers: { Authorization: `Bearer ${KV_TOKEN}` }
+// ── Blob REST helpers ────────────────────────────────────────────
+async function blobList() {
+  const r = await fetch(`${BLOB_BASE}?prefix=${BLOB_FILE}&limit=5`, {
+    headers: { Authorization: `Bearer ${BLOB_TOKEN}`, 'x-api-version': '7' }
   });
   const body = await r.json();
-  return body.result ? JSON.parse(body.result) : null;
+  return body.blobs || [];
 }
 
-async function kvSet(key, value) {
-  // Use pipeline (POST /) so large JSON values aren't URL-encoded
-  const r = await fetch(KV_URL, {
-    method:  'POST',
-    headers: { Authorization: `Bearer ${KV_TOKEN}`, 'Content-Type': 'application/json' },
-    body:    JSON.stringify([['SET', key, JSON.stringify(value)]])
+async function blobPut(content) {
+  const r = await fetch(`${BLOB_BASE}/${BLOB_FILE}`, {
+    method:  'PUT',
+    headers: {
+      Authorization:    `Bearer ${BLOB_TOKEN}`,
+      'x-api-version':  '7',
+      'x-content-type': 'application/json',
+      'x-access':       'public',
+    },
+    body: content,
   });
-  return r.ok;
+  return r.json(); // returns { url, pathname, ... }
+}
+
+async function blobDelete(urls) {
+  if (!urls.length) return;
+  await fetch(BLOB_BASE, {
+    method:  'DELETE',
+    headers: {
+      Authorization:   `Bearer ${BLOB_TOKEN}`,
+      'x-api-version': '7',
+      'Content-Type':  'application/json',
+    },
+    body: JSON.stringify({ urls }),
+  });
 }
 
 // ── Handler ──────────────────────────────────────────────────────
@@ -40,17 +56,22 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Edit-Token');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  if (!KV_URL || !KV_TOKEN) {
+  if (!BLOB_TOKEN) {
     return res.status(503).json({
-      error: 'KV store not configured. Connect a KV database in your Vercel project and redeploy.'
+      error: 'Blob store not connected. Go to Vercel → Storage → connect your Blob store to this project.'
     });
   }
 
-  // ── GET: return saved flowchart data ─────────────────────────────
+  // ── GET: load saved flowchart data ───────────────────────────────
   if (req.method === 'GET') {
     try {
-      const data = await kvGet(KV_KEY);
-      if (!data) return res.status(404).json(null);
+      const blobs = await blobList();
+      if (!blobs.length) return res.status(404).json(null);
+
+      // Fetch the most recently uploaded blob
+      blobs.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
+      const r    = await fetch(blobs[0].url);
+      const data = await r.json();
       return res.status(200).json(data);
     } catch (err) {
       console.error('GET /api/flowchart error:', err.message);
@@ -58,7 +79,7 @@ module.exports = async function handler(req, res) {
     }
   }
 
-  // ── POST: save flowchart data (password-protected) ──────────────
+  // ── POST: save flowchart data (password-protected) ───────────────
   if (req.method === 'POST') {
     if (!EDIT_PW) {
       return res.status(500).json({ error: 'EDIT_PASSWORD env var not set on server.' });
@@ -72,8 +93,11 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Body must be a JSON array.' });
     }
 
-    const ok = await kvSet(KV_KEY, data);
-    if (!ok) return res.status(500).json({ error: 'KV write failed.' });
+    // Delete old blobs, then upload the new version
+    const existing = await blobList();
+    await blobDelete(existing.map(b => b.url));
+    await blobPut(JSON.stringify(data));
+
     return res.status(200).json({ ok: true });
   }
 
