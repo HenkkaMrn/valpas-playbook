@@ -90,26 +90,41 @@
   }
 
   /* LINK CARDS */
-  .link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .link-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .link-card {
-    background: var(--surface);
+    border-radius: 10px; padding: 18px 22px;
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 22px;
     text-decoration: none;
-    display: flex; flex-direction: column; gap: 4px;
-    position: relative;
-    transition: border-color 0.15s;
+    display: flex; flex-direction: column; gap: 0;
+    transition: opacity 0.15s;
   }
-  .link-card:hover { border-color: rgba(251,247,244,0.28); }
-  .link-card-title { font-size: 14px; font-weight: 600; color: var(--text); }
-  .link-card-sub   { font-size: 12px; color: var(--muted); }
-  .link-card-arrow {
-    position: absolute; top: 20px; right: 20px;
-    font-size: 16px; color: var(--muted);
-    transition: transform 0.15s;
+  .link-card:hover { opacity: 0.85; }
+  .link-card-label {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 5px;
   }
-  .link-card:hover .link-card-arrow { transform: translateX(3px); }
+  .link-card-title { font-size: 14px; font-weight: 500; color: var(--off-white); }
+  .link-card-sub   { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.6; }
+
+  /* Card color variants */
+  .lc-yellow { background: #0b1028; border-color: rgba(255,173,50,0.35); }
+  .lc-yellow .link-card-label { color: #FFAD32; }
+  .lc-green  { background: #0d1a15; border-color: rgba(100,200,140,0.3); }
+  .lc-green  .link-card-label { color: #6dc88a; }
+  .lc-blue   { background: #0d1220; border-color: rgba(228,241,252,0.2); }
+  .lc-blue   .link-card-label { color: #a8d4f0; }
+  .lc-purple { background: #0d1420; border-color: rgba(220,217,255,0.2); }
+  .lc-purple .link-card-label { color: #c4c1ff; }
+
+  body.light .lc-yellow { background: #f5f0e8; border-color: rgba(180,120,0,0.4); }
+  body.light .lc-yellow .link-card-label { color: #c47e00; }
+  body.light .lc-green  { background: #edf7f1; border-color: rgba(60,160,100,0.35); }
+  body.light .lc-green  .link-card-label { color: #3a9060; }
+  body.light .lc-blue   { background: #edf3f8; border-color: rgba(100,160,210,0.4); }
+  body.light .lc-blue   .link-card-label { color: #4a8ab0; }
+  body.light .lc-purple { background: #f0eef8; border-color: rgba(150,140,220,0.4); }
+  body.light .lc-purple .link-card-label { color: #6e6ab0; }
+  body.light .link-card-title { color: #070A19; }
 
   /* SEARCH BAR */
   .search-wrap {
@@ -270,7 +285,7 @@
     <a href="index.html">Playbook</a>
     <a href="flowchart.html">Flowchart</a>
     <a href="agenda.html">Agenda</a>
-    <a href="/guide">Guide</a>
+    <a href="/guide">Install Guide</a>
     <a href="/templates">Templates</a>
     <a href="hotels.html" class="active">Resources</a>
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Light</button>
@@ -283,20 +298,25 @@
   <section class="resource-section">
     <div class="section-label">Tools &amp; links</div>
     <div class="link-grid">
-      <a class="link-card" href="https://guide.valpashotels.com/" target="_blank" rel="noopener">
+      <a class="link-card lc-yellow" href="https://guide.valpashotels.com/" target="_blank" rel="noopener">
+        <span class="link-card-label">Reference · External</span>
         <span class="link-card-title">Guide</span>
-        <span class="link-card-sub">Self-installation reference</span>
-        <span class="link-card-arrow">→</span>
+        <span class="link-card-sub">Self-installation reference at guide.valpashotels.com</span>
       </a>
-      <a class="link-card" href="https://app.copper.com" target="_blank" rel="noopener">
+      <a class="link-card lc-green" href="/guide">
+        <span class="link-card-label">Document · PDF</span>
+        <span class="link-card-title">Installation Quick Guide</span>
+        <span class="link-card-sub">Step-by-step install reference — save or print as PDF</span>
+      </a>
+      <a class="link-card lc-blue" href="https://app.copper.com" target="_blank" rel="noopener">
+        <span class="link-card-label">Tool · CRM</span>
         <span class="link-card-title">CRM</span>
-        <span class="link-card-sub">Copper — customer records</span>
-        <span class="link-card-arrow">→</span>
+        <span class="link-card-sub">Copper — customer records and pipeline</span>
       </a>
-      <a class="link-card" href="https://app.valpashotels.com/hotel-management" target="_blank" rel="noopener">
+      <a class="link-card lc-purple" href="https://app.valpashotels.com/hotel-management" target="_blank" rel="noopener">
+        <span class="link-card-label">Tool · Dashboard</span>
         <span class="link-card-title">Valpas Dashboard</span>
-        <span class="link-card-sub">Hotel management portal</span>
-        <span class="link-card-arrow">→</span>
+        <span class="link-card-sub">Hotel management and device monitoring portal</span>
       </a>
     </div>
   </section>
