@@ -1,72 +1,81 @@
 /**
- * Valpas Flowchart API
- * GET  /api/flowchart  → returns saved flowchart data (or 404 if none)
- * POST /api/flowchart  → saves flowchart data (requires X-Edit-Token header)
+ * Valpas Flowchart API  —  uses Vercel KV (Upstash Redis REST)
  *
- * Env vars needed in Vercel dashboard:
- *   BLOB_READ_WRITE_TOKEN  — auto-set when you connect a Blob store
- *   EDIT_PASSWORD          — the password you choose for the edit panel
+ * No npm packages needed — only native fetch, same pattern as hotel.js
+ *
+ * Required env vars (auto-added when you connect a KV store in Vercel):
+ *   KV_REST_API_URL    — e.g. https://xxxxx.upstash.io
+ *   KV_REST_API_TOKEN  — Upstash REST token
+ *   EDIT_PASSWORD      — the password you choose for the edit panel
  */
 
-const { put, list, del } = require('@vercel/blob');
+const KV_URL   = process.env.KV_REST_API_URL;
+const KV_TOKEN = process.env.KV_REST_API_TOKEN;
+const EDIT_PW  = process.env.EDIT_PASSWORD;
+const KV_KEY   = 'valpas-flowchart';
 
-const BLOB_NAME   = 'valpas-flowchart-data.json';
-const EDIT_PW     = process.env.EDIT_PASSWORD;
+// ── Upstash REST helper ──────────────────────────────────────────
+async function kvGet(key) {
+  const r = await fetch(`${KV_URL}/get/${key}`, {
+    headers: { Authorization: `Bearer ${KV_TOKEN}` }
+  });
+  const body = await r.json();
+  return body.result ? JSON.parse(body.result) : null;
+}
 
+async function kvSet(key, value) {
+  // Use pipeline (POST /) so large JSON values aren't URL-encoded
+  const r = await fetch(KV_URL, {
+    method:  'POST',
+    headers: { Authorization: `Bearer ${KV_TOKEN}`, 'Content-Type': 'application/json' },
+    body:    JSON.stringify([['SET', key, JSON.stringify(value)]])
+  });
+  return r.ok;
+}
+
+// ── Handler ──────────────────────────────────────────────────────
 module.exports = async function handler(req, res) {
-  // ── CORS (needed if you ever call this from a different origin) ──
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Edit-Token');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // ── GET: load flowchart data ─────────────────────────────────────
+  if (!KV_URL || !KV_TOKEN) {
+    return res.status(503).json({
+      error: 'KV store not configured. Connect a KV database in your Vercel project and redeploy.'
+    });
+  }
+
+  // ── GET: return saved flowchart data ─────────────────────────────
   if (req.method === 'GET') {
     try {
-      const { blobs } = await list({ prefix: BLOB_NAME });
-      if (!blobs.length) return res.status(404).json(null);
-
-      // Pick the most recently uploaded blob (in case of duplicates)
-      blobs.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
-      const response = await fetch(blobs[0].url);
-      const data     = await response.json();
+      const data = await kvGet(KV_KEY);
+      if (!data) return res.status(404).json(null);
       return res.status(200).json(data);
     } catch (err) {
-      console.error('GET /api/flowchart error:', err);
+      console.error('GET /api/flowchart error:', err.message);
       return res.status(404).json(null);
     }
   }
 
-  // ── POST: save flowchart data (password-protected) ───────────────
+  // ── POST: save flowchart data (password-protected) ──────────────
   if (req.method === 'POST') {
-    const token = req.headers['x-edit-token'];
-
     if (!EDIT_PW) {
       return res.status(500).json({ error: 'EDIT_PASSWORD env var not set on server.' });
     }
-    if (token !== EDIT_PW) {
+    if (req.headers['x-edit-token'] !== EDIT_PW) {
       return res.status(401).json({ error: 'Wrong password.' });
     }
 
-    const data = req.body; // Vercel auto-parses application/json bodies
-    if (!data || !Array.isArray(data)) {
+    const data = req.body;
+    if (!Array.isArray(data)) {
       return res.status(400).json({ error: 'Body must be a JSON array.' });
     }
 
-    // Delete any old blobs with the same name first
-    const { blobs: existing } = await list({ prefix: BLOB_NAME });
-    if (existing.length) {
-      await Promise.all(existing.map(b => del(b.url)));
-    }
-
-    // Upload the new data
-    await put(BLOB_NAME, JSON.stringify(data), {
-      access: 'public',
-      contentType: 'application/json',
-    });
-
+    const ok = await kvSet(KV_KEY, data);
+    if (!ok) return res.status(500).json({ error: 'KV write failed.' });
     return res.status(200).json({ ok: true });
   }
 
-  return res.status(405).json({ error: 'Method not allowed.' });
+  return res.status(405).end();
 };
