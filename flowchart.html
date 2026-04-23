@@ -520,5 +520,709 @@
   });
 </script>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     FLOWCHART EDITOR — inline styles
+     ═══════════════════════════════════════════════════════════════ -->
+<style id="fc-editor-css">
+/* ── Toolbar ──────────────────────────────────────────────────── */
+.fc-toolbar {
+  position: fixed; bottom: 24px; right: 24px;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+  z-index: 9000;
+}
+.fc-btn {
+  background: #1a1f3a; color: #fbf7f4;
+  border: 1px solid rgba(251,247,244,0.15); border-radius: 100px;
+  padding: 9px 22px; font-size: 11px; letter-spacing: 0.13em;
+  text-transform: uppercase; font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+  white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+.fc-btn:hover { opacity: 0.85; }
+.fc-btn-accent { background: #FFAD32; color: #070A19; border-color: #FFAD32; }
+.fc-btn-ghost  { background: rgba(255,255,255,0.05); }
+.fc-btn-danger { background: rgba(255,100,100,0.12); color: #ff9090; border-color: rgba(255,100,100,0.3); }
+.fc-btn-sm { padding: 6px 14px; font-size: 10px; }
+.fc-toolbar-secondary {
+  display: none; flex-direction: column; align-items: flex-end; gap: 6px;
+}
+body.fc-edit .fc-toolbar-secondary { display: flex; }
+
+/* ── Edit mode node styles ────────────────────────────────────── */
+body.fc-edit .node {
+  cursor: pointer; position: relative; transition: outline 0.12s;
+}
+body.fc-edit .node:hover { outline: 2px solid rgba(255,173,50,0.45); outline-offset: 2px; }
+body.fc-edit .node.fc-sel { outline: 2px solid #FFAD32; outline-offset: 2px; }
+
+/* ── Node action overlay ──────────────────────────────────────── */
+.fc-node-bar {
+  display: none; position: absolute; top: 8px; right: 8px;
+  gap: 4px; z-index: 10;
+}
+body.fc-edit .node:hover .fc-node-bar,
+body.fc-edit .node.fc-sel .fc-node-bar { display: flex; }
+.fc-nab {
+  background: rgba(13,16,37,0.92); border: 1px solid rgba(251,247,244,0.14);
+  border-radius: 6px; color: rgba(251,247,244,0.6); cursor: pointer;
+  font-size: 11px; padding: 3px 9px; font-family: 'DM Sans', sans-serif;
+  transition: all 0.13s; backdrop-filter: blur(4px);
+}
+.fc-nab:hover { color: #fbf7f4; background: #1e2540; }
+.fc-nab-del:hover { color: #ff9090; border-color: rgba(255,100,100,0.35); }
+
+/* ── Connector edit hint ──────────────────────────────────────── */
+body.fc-edit .connector { cursor: pointer; }
+body.fc-edit .connector:hover .connector-label {
+  outline: 1px dashed rgba(255,173,50,0.4); border-radius: 3px; padding: 0 4px;
+}
+body.fc-edit .connector:hover::after {
+  content: ' ✎'; font-size: 12px; color: rgba(255,173,50,0.55);
+}
+
+/* ── Add-block button ─────────────────────────────────────────── */
+.fc-add-row {
+  display: none; align-items: center; justify-content: center;
+  padding: 3px 0; cursor: pointer;
+}
+body.fc-edit .fc-add-row { display: flex; opacity: 0.35; transition: opacity 0.15s; }
+body.fc-edit .fc-add-row:hover { opacity: 1; }
+.fc-add-inner {
+  background: var(--surface2); border: 1px dashed rgba(251,247,244,0.15);
+  border-radius: 100px; padding: 4px 18px;
+  font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase;
+  font-weight: 600; color: rgba(251,247,244,0.4);
+}
+
+/* ── Right-side editor panel ──────────────────────────────────── */
+.fc-panel {
+  position: fixed; top: 0; right: 0; width: 360px; height: 100vh;
+  background: #0c1023; border-left: 1px solid rgba(251,247,244,0.08);
+  z-index: 8999; overflow-y: auto;
+  transform: translateX(100%); transition: transform 0.22s cubic-bezier(.4,0,.2,1);
+  padding: 28px 24px 40px; box-shadow: -8px 0 32px rgba(0,0,0,0.4);
+}
+.fc-panel.fc-open { transform: translateX(0); }
+.fc-panel-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px; padding-bottom: 16px;
+  border-bottom: 1px solid rgba(251,247,244,0.08);
+}
+.fc-panel-hd-title {
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  font-weight: 600; color: rgba(251,247,244,0.4);
+}
+.fc-panel-close {
+  background: none; border: none; color: rgba(251,247,244,0.35);
+  cursor: pointer; font-size: 16px; line-height: 1; padding: 2px;
+}
+.fc-panel-close:hover { color: #fbf7f4; }
+
+/* ── Panel form fields ────────────────────────────────────────── */
+.fc-field { margin-bottom: 18px; }
+.fc-lbl {
+  display: block; font-size: 10px; letter-spacing: 0.13em;
+  text-transform: uppercase; font-weight: 600;
+  color: rgba(251,247,244,0.38); margin-bottom: 7px;
+}
+.fc-lbl span { font-weight: 400; text-transform: none; letter-spacing: 0; color: rgba(251,247,244,0.25); }
+.fc-inp, .fc-ta, .fc-sel {
+  width: 100%; background: #111629; border: 1px solid rgba(251,247,244,0.1);
+  border-radius: 8px; color: #fbf7f4; font-family: 'DM Sans', sans-serif;
+  font-size: 13px; padding: 10px 13px; outline: none; transition: border-color 0.15s;
+}
+.fc-inp:focus, .fc-ta:focus, .fc-sel:focus { border-color: rgba(255,173,50,0.45); }
+.fc-ta { resize: vertical; min-height: 80px; line-height: 1.55; }
+.fc-sel { appearance: none; cursor: pointer; }
+.fc-sel option { background: #0c1023; }
+
+/* ── Node type grid ───────────────────────────────────────────── */
+.fc-type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.fc-type-opt {
+  border-radius: 8px; padding: 9px 12px; cursor: pointer;
+  border: 2px solid transparent; font-size: 11px; font-weight: 600;
+  transition: all 0.13s; text-align: center; font-family: 'DM Sans', sans-serif;
+}
+.fc-type-opt:hover { opacity: 0.85; }
+.fc-type-opt.fc-type-sel { border-color: #FFAD32 !important; }
+
+/* ── Panel action buttons ─────────────────────────────────────── */
+.fc-panel-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 22px; }
+.fc-panel-actions .fc-btn { border-radius: 8px; text-align: center; width: 100%; box-shadow: none; }
+
+/* ── Toast ────────────────────────────────────────────────────── */
+.fc-toast {
+  position: fixed; bottom: 82px; right: 24px;
+  background: #131b2e; border: 1px solid rgba(109,200,138,0.3);
+  border-radius: 10px; padding: 11px 20px; font-size: 12px;
+  color: #6dc88a; font-weight: 500; font-family: 'DM Sans', sans-serif;
+  z-index: 9001; opacity: 0; transform: translateY(6px);
+  transition: all 0.2s; pointer-events: none;
+}
+.fc-toast.fc-show { opacity: 1; transform: translateY(0); }
+
+/* ── Edit mode indicator ──────────────────────────────────────── */
+body.fc-edit .flow-heading::after {
+  content: '  ✎ Editing';
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  font-style: normal; letter-spacing: 0; font-weight: 500;
+  color: #FFAD32; opacity: 0.8;
+}
+/* Light mode adjustments */
+body.light .fc-btn { background: #fff; color: #070A19; border-color: rgba(7,10,25,0.2); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+body.light .fc-btn-accent { background: #FFAD32; color: #070A19; border-color: #FFAD32; }
+body.light .fc-panel { background: #f8f6f2; border-left-color: rgba(7,10,25,0.1); }
+body.light .fc-inp, body.light .fc-ta, body.light .fc-sel { background: #fff; border-color: rgba(7,10,25,0.15); color: #070A19; }
+body.light .fc-lbl { color: rgba(7,10,25,0.45); }
+body.light .fc-panel-hd-title { color: rgba(7,10,25,0.4); }
+body.light .fc-panel-close { color: rgba(7,10,25,0.35); }
+body.light .fc-panel-close:hover { color: #070A19; }
+body.light .fc-add-inner { background: #edeae5; color: rgba(7,10,25,0.4); border-color: rgba(7,10,25,0.15); }
+body.light .fc-nab { background: rgba(255,255,255,0.92); color: rgba(7,10,25,0.55); border-color: rgba(7,10,25,0.15); }
+body.light .fc-nab:hover { background: #fff; color: #070A19; }
+body.light .fc-toast { background: #f0f7f3; border-color: rgba(60,140,90,0.3); color: #3a7a50; }
+</style>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FLOWCHART EDITOR — markup injected into DOM on init
+     ═══════════════════════════════════════════════════════════════ -->
+<script id="fc-editor-js">
+(function () {
+'use strict';
+
+/* ── Constants ─────────────────────────────────────────────────── */
+var STORE_KEY = 'valpas_fc_v2';
+
+var NODE_TYPES = [
+  { id:'n-start',    name:'Start',     bg:'#0b1028', border:'rgba(255,173,50,0.35)',      color:'#FFAD32' },
+  { id:'n-before',   name:'Before',    bg:'#0d1220', border:'rgba(228,241,252,0.2)',       color:'#a8d4f0' },
+  { id:'n-during',   name:'During',    bg:'#0d1420', border:'rgba(220,217,255,0.2)',       color:'#c4c1ff' },
+  { id:'n-hotel',    name:'Hotel',     bg:'#0f1a12', border:'rgba(100,200,140,0.2)',       color:'#6dc88a' },
+  { id:'n-followup', name:'Follow-up', bg:'#0d1322', border:'rgba(228,241,252,0.15)',      color:'#a8d4f0' },
+  { id:'n-verify',   name:'Verify',    bg:'#0e1325', border:'rgba(220,217,255,0.18)',      color:'#c4c1ff' },
+  { id:'n-decision', name:'Decision',  bg:'#111526', border:'rgba(251,247,244,0.14)',      color:'rgba(251,247,244,0.42)', dashed:true },
+  { id:'n-success',  name:'Success',   bg:'#0d1a15', border:'rgba(100,200,140,0.3)',       color:'#6dc88a' },
+  { id:'n-fail',     name:'Issue',     bg:'#1a1015', border:'rgba(255,100,100,0.25)',      color:'#ff9090' },
+  { id:'n-tbd',      name:'TBD',       bg:'#181510', border:'rgba(255,173,50,0.25)',       color:'#FFAD32', dashed:true },
+];
+
+/* ── State ─────────────────────────────────────────────────────── */
+var editMode   = false;
+var flowData   = [];
+var editIdx    = -1;
+var editBrIdx  = -1;
+var selTypeId  = '';
+
+/* ─────────────────────────────────────────────────────────────────
+   DOM PARSING — extract current flowchart into data model
+   ───────────────────────────────────────────────────────────────── */
+function parseDom() {
+  var flowEl = document.querySelector('.flow');
+  if (!flowEl) return [];
+  var items = [];
+  var kids = Array.from(flowEl.children);
+  for (var i = 0; i < kids.length; i++) {
+    var el = kids[i];
+    if (el.classList.contains('node')) {
+      var nt = '';
+      el.classList.forEach(function(c){ if (c.startsWith('n-')) nt = c; });
+      items.push({
+        type: 'node', nodeType: nt || 'n-before',
+        label: (el.querySelector('.node-label') || {}).textContent || '',
+        title: (el.querySelector('.node-title') || {}).textContent || '',
+        sub:   (el.querySelector('.node-sub')   || {}).innerHTML   || ''
+      });
+    } else if (el.classList.contains('connector')) {
+      var lbl = el.querySelector('.connector-label');
+      items.push({ type:'connector', label: lbl ? lbl.textContent : '' });
+    } else if (el.classList.contains('branch-grid')) {
+      var branches = [];
+      el.querySelectorAll(':scope > div').forEach(function(col) {
+        var tag  = col.querySelector('.branch-tag');
+        var node = col.querySelector('.node');
+        if (!node) return;
+        var bnt = '';
+        node.classList.forEach(function(c){ if (c.startsWith('n-')) bnt = c; });
+        var btc = '';
+        if (tag) tag.classList.forEach(function(c){ if (c.startsWith('bt-')) btc = c; });
+        branches.push({
+          tagText: tag ? tag.textContent : '',
+          tagClass: btc,
+          nodeType: bnt || 'n-success',
+          label: (node.querySelector('.node-label') || {}).textContent || '',
+          title: (node.querySelector('.node-title') || {}).textContent || '',
+          sub:   (node.querySelector('.node-sub')   || {}).innerHTML   || ''
+        });
+      });
+      items.push({ type:'branch', branches: branches });
+    }
+  }
+  return items;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   RENDERING — convert data model back to HTML
+   ───────────────────────────────────────────────────────────────── */
+function renderFlow(data) {
+  var flowEl = document.querySelector('.flow');
+  if (!flowEl) return;
+  var html = '';
+  data.forEach(function(item, idx) {
+    if      (item.type === 'node')      html += renderNode(item, idx);
+    else if (item.type === 'connector') html += renderConnector(item, idx);
+    else if (item.type === 'branch')    html += renderBranch(item, idx);
+  });
+  flowEl.innerHTML = html;
+}
+
+function renderNode(item, idx) {
+  var subHtml = item.sub ? '<div class="node-sub">'+item.sub+'</div>' : '';
+  return [
+    '<div class="node '+item.nodeType+'" data-fc-idx="'+idx+'">',
+    '  <div class="fc-node-bar">',
+    '    <button class="fc-nab" onclick="fcEditNode('+idx+');event.stopPropagation()">Edit</button>',
+    '    <button class="fc-nab" onclick="fcMoveItem('+idx+',-1);event.stopPropagation()" title="Move up">↑</button>',
+    '    <button class="fc-nab" onclick="fcMoveItem('+idx+',1);event.stopPropagation()" title="Move down">↓</button>',
+    '    <button class="fc-nab fc-nab-del" onclick="fcDeleteItem('+idx+');event.stopPropagation()">✕</button>',
+    '  </div>',
+    '  <div class="node-label">'+esc(item.label)+'</div>',
+    '  <div class="node-title">'+esc(item.title)+'</div>',
+    subHtml,
+    '</div>',
+    '<div class="fc-add-row" onclick="fcAddAfter('+idx+')">',
+    '  <div class="fc-add-inner">+ Add block</div>',
+    '</div>'
+  ].join('');
+}
+
+function renderConnector(item, idx) {
+  var labelHtml = item.label
+    ? ' <span class="connector-label" onclick="fcEditConnector('+idx+');event.stopPropagation()">'+esc(item.label)+'</span>'
+    : '';
+  return '<div class="connector" data-fc-idx="'+idx+'" onclick="fcEditConnector('+idx+')">↓'+labelHtml+'</div>';
+}
+
+function renderBranch(item, idx) {
+  var cols = item.branches.map(function(b, bi) {
+    var subHtml = b.sub ? '<div class="node-sub">'+b.sub+'</div>' : '';
+    return [
+      '<div>',
+      '  <span class="branch-tag '+b.tagClass+'">'+esc(b.tagText)+'</span>',
+      '  <div class="node '+b.nodeType+'" data-fc-idx="'+idx+'" data-fc-br="'+bi+'">',
+      '    <div class="fc-node-bar">',
+      '      <button class="fc-nab" onclick="fcEditBranch('+idx+','+bi+');event.stopPropagation()">Edit</button>',
+      '      <button class="fc-nab fc-nab-del" onclick="fcDelBranch('+idx+','+bi+');event.stopPropagation()">✕</button>',
+      '    </div>',
+      '    <div class="node-label">'+esc(b.label)+'</div>',
+      '    <div class="node-title">'+esc(b.title)+'</div>',
+      subHtml,
+      '  </div>',
+      '</div>'
+    ].join('');
+  }).join('');
+  return [
+    '<div class="branch-grid" data-fc-idx="'+idx+'">',
+    cols,
+    '</div>',
+    '<div class="fc-add-row" onclick="fcAddAfter('+idx+')">',
+    '  <div class="fc-add-inner">+ Add block</div>',
+    '</div>'
+  ].join('');
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   PANEL — right-side editor drawer
+   ───────────────────────────────────────────────────────────────── */
+function openPanel(title, bodyHtml) {
+  document.getElementById('fc-panel-title').textContent = title;
+  document.getElementById('fc-panel-body').innerHTML   = bodyHtml;
+  document.getElementById('fc-panel').classList.add('fc-open');
+}
+function closePanel() {
+  document.getElementById('fc-panel').classList.remove('fc-open');
+  document.querySelectorAll('.node.fc-sel').forEach(function(n){ n.classList.remove('fc-sel'); });
+  editIdx = editBrIdx = -1;
+}
+
+function typeGrid(current) {
+  return '<div class="fc-type-grid" id="fc-tgrid">' +
+    NODE_TYPES.map(function(t) {
+      return '<div class="fc-type-opt'+(current===t.id?' fc-type-sel':'')+'" '+
+        'id="fct-'+t.id+'" '+
+        'onclick="fcSelType(\''+t.id+'\')" '+
+        'style="background:'+t.bg+';border-color:'+(current===t.id?'#FFAD32':t.border)+';color:'+t.color+';"'+
+        (t.dashed?'':'')+'>'+
+        t.name+'</div>';
+    }).join('') +
+  '</div>';
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   EDIT OPERATIONS
+   ───────────────────────────────────────────────────────────────── */
+window.fcEditNode = function(idx) {
+  var item = flowData[idx];
+  editIdx = idx; editBrIdx = -1; selTypeId = item.nodeType;
+  clearSel();
+  var el = document.querySelector('[data-fc-idx="'+idx+'"]:not([data-fc-br])');
+  if (el) el.classList.add('fc-sel');
+
+  openPanel('Edit Block', [
+    '<div class="fc-field"><label class="fc-lbl">Block colour / type</label>'+typeGrid(item.nodeType)+'</div>',
+    '<div class="fc-field"><label class="fc-lbl">Label <span>e.g. "Before · OPS"</span></label>',
+    '<input class="fc-inp" id="fc-f-label" value="'+escAttr(item.label)+'"></div>',
+    '<div class="fc-field"><label class="fc-lbl">Title</label>',
+    '<input class="fc-inp" id="fc-f-title" value="'+escAttr(item.title)+'"></div>',
+    '<div class="fc-field"><label class="fc-lbl">Description</label>',
+    '<textarea class="fc-ta" id="fc-f-sub">'+item.sub+'</textarea></div>',
+    '<div class="fc-panel-actions">',
+    '  <button class="fc-btn fc-btn-accent" onclick="fcSaveNode()">Save changes</button>',
+    '  <button class="fc-btn fc-btn-danger" onclick="fcDeleteItem('+idx+');closePanel()">Delete block</button>',
+    '  <button class="fc-btn fc-btn-ghost" onclick="closePanel()">Cancel</button>',
+    '</div>'
+  ].join(''));
+};
+
+window.fcSelType = function(id) {
+  selTypeId = id;
+  NODE_TYPES.forEach(function(t) {
+    var el = document.getElementById('fct-'+t.id);
+    if (!el) return;
+    el.classList.toggle('fc-type-sel', t.id === id);
+    el.style.borderColor = (t.id === id) ? '#FFAD32' : t.border;
+  });
+};
+
+window.fcSaveNode = function() {
+  if (editIdx < 0) return;
+  flowData[editIdx] = {
+    type: 'node',
+    nodeType: selTypeId || flowData[editIdx].nodeType,
+    label: document.getElementById('fc-f-label').value,
+    title: document.getElementById('fc-f-title').value,
+    sub:   document.getElementById('fc-f-sub').value
+  };
+  persist(); renderFlow(flowData); closePanel(); toast('Block saved ✓');
+};
+
+window.fcEditConnector = function(idx) {
+  if (!editMode) return;
+  editIdx = idx;
+  var item = flowData[idx];
+  openPanel('Edit Arrow', [
+    '<div class="fc-field"><label class="fc-lbl">Arrow label <span>(leave blank to hide)</span></label>',
+    '<input class="fc-inp" id="fc-f-conn" value="'+escAttr(item.label||'')+'"></div>',
+    '<div class="fc-panel-actions">',
+    '  <button class="fc-btn fc-btn-accent" onclick="fcSaveConn()">Save</button>',
+    '  <button class="fc-btn fc-btn-danger" onclick="fcDeleteItem('+idx+');closePanel()">Remove arrow</button>',
+    '  <button class="fc-btn fc-btn-ghost" onclick="closePanel()">Cancel</button>',
+    '</div>'
+  ].join(''));
+};
+
+window.fcSaveConn = function() {
+  if (editIdx < 0) return;
+  flowData[editIdx].label = document.getElementById('fc-f-conn').value;
+  persist(); renderFlow(flowData); closePanel(); toast('Arrow saved ✓');
+};
+
+window.fcEditBranch = function(idx, bi) {
+  var b = flowData[idx].branches[bi];
+  editIdx = idx; editBrIdx = bi; selTypeId = b.nodeType;
+  openPanel('Edit Branch Block', [
+    '<div class="fc-field"><label class="fc-lbl">Block colour / type</label>'+typeGrid(b.nodeType)+'</div>',
+    '<div class="fc-field"><label class="fc-lbl">Branch tag text</label>',
+    '<input class="fc-inp" id="fc-f-tag" value="'+escAttr(b.tagText)+'"></div>',
+    '<div class="fc-field"><label class="fc-lbl">Tag style</label>',
+    '<select class="fc-sel" id="fc-f-tagcls">',
+    '<option value="bt-yes"'+(b.tagClass==='bt-yes'?' selected':'')+'>✓ Yes (green)</option>',
+    '<option value="bt-no"'+(b.tagClass==='bt-no'?' selected':'')+'>✗ No (red)</option>',
+    '<option value=""'+(!b.tagClass?' selected':'')+'>Neutral</option>',
+    '</select></div>',
+    '<div class="fc-field"><label class="fc-lbl">Label</label>',
+    '<input class="fc-inp" id="fc-f-label" value="'+escAttr(b.label)+'"></div>',
+    '<div class="fc-field"><label class="fc-lbl">Title</label>',
+    '<input class="fc-inp" id="fc-f-title" value="'+escAttr(b.title)+'"></div>',
+    '<div class="fc-field"><label class="fc-lbl">Description</label>',
+    '<textarea class="fc-ta" id="fc-f-sub">'+b.sub+'</textarea></div>',
+    '<div class="fc-panel-actions">',
+    '  <button class="fc-btn fc-btn-accent" onclick="fcSaveBranch()">Save changes</button>',
+    '  <button class="fc-btn fc-btn-danger" onclick="fcDelBranch('+idx+','+bi+');closePanel()">Delete branch</button>',
+    '  <button class="fc-btn fc-btn-ghost" onclick="closePanel()">Cancel</button>',
+    '</div>'
+  ].join(''));
+};
+
+window.fcSaveBranch = function() {
+  if (editIdx < 0) return;
+  flowData[editIdx].branches[editBrIdx] = {
+    tagText:  document.getElementById('fc-f-tag').value,
+    tagClass: document.getElementById('fc-f-tagcls').value,
+    nodeType: selTypeId,
+    label:    document.getElementById('fc-f-label').value,
+    title:    document.getElementById('fc-f-title').value,
+    sub:      document.getElementById('fc-f-sub').value
+  };
+  persist(); renderFlow(flowData); closePanel(); toast('Branch saved ✓');
+};
+
+window.fcDelBranch = function(idx, bi) {
+  flowData[idx].branches.splice(bi, 1);
+  if (flowData[idx].branches.length === 0) flowData.splice(idx, 1);
+  persist(); renderFlow(flowData); toast('Branch deleted');
+};
+
+window.fcAddAfter = function(afterIdx) {
+  var newNode = { type:'node', nodeType:'n-before', label:'New Block', title:'Untitled block', sub:'' };
+  var newConn = { type:'connector', label:'' };
+  flowData.splice(afterIdx + 1, 0, newConn, newNode);
+  persist(); renderFlow(flowData);
+  var ni = afterIdx + 2;
+  setTimeout(function(){ window.fcEditNode(ni); }, 30);
+  toast('Block added');
+};
+
+window.fcDeleteItem = function(idx) {
+  // Remove the item; also remove an adjacent isolated connector
+  flowData.splice(idx, 1);
+  // If the item that landed at idx is now a connector and idx-1 is also a connector → remove duplicate
+  persist(); renderFlow(flowData); closePanel(); toast('Deleted');
+};
+
+window.fcMoveItem = function(idx, dir) {
+  // Move node + its preceding connector together
+  var newIdx = idx + (dir === -1 ? -2 : 2);
+  if (newIdx < 0 || newIdx >= flowData.length) return;
+  var item = flowData.splice(idx, 1)[0];
+  var actualNew = Math.max(0, Math.min(flowData.length, idx + (dir === -1 ? -1 : 2)));
+  flowData.splice(actualNew, 0, item);
+  persist(); renderFlow(flowData); toast(dir === -1 ? 'Moved up' : 'Moved down');
+};
+
+window.fcAddNewBlock = function() {
+  var last = flowData.length - 1;
+  window.fcAddAfter(last);
+};
+
+/* ─────────────────────────────────────────────────────────────────
+   EDIT MODE TOGGLE
+   ───────────────────────────────────────────────────────────────── */
+window.fcToggle = function() {
+  editMode = !editMode;
+  document.body.classList.toggle('fc-edit', editMode);
+  var btn = document.getElementById('fc-main-btn');
+  btn.textContent = editMode ? '✕  Exit edit mode' : '✏  Edit flowchart';
+  btn.classList.toggle('fc-btn-accent', editMode);
+  if (!editMode) closePanel();
+};
+
+window.closePanel = closePanel;
+
+/* ─────────────────────────────────────────────────────────────────
+   PERSISTENCE  (localStorage + online API)
+   ───────────────────────────────────────────────────────────────── */
+
+// ── localStorage helpers ─────────────────────────────────────────
+function localSave() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(flowData)); } catch(e){}
+}
+function localLoad() {
+  try { var d = localStorage.getItem(STORE_KEY); return d ? JSON.parse(d) : null; } catch(e){ return null; }
+}
+
+// ── Password helpers (session-only, never stored in localStorage) ─
+function getPw() { return sessionStorage.getItem('fc_pw') || ''; }
+function setPw(pw) { sessionStorage.setItem('fc_pw', pw); }
+function clearPw() { sessionStorage.removeItem('fc_pw'); }
+
+// ── Online API helpers ───────────────────────────────────────────
+function apiLoad() {
+  return fetch('/api/flowchart')
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .catch(function() { return null; });
+}
+function apiSave(pw) {
+  return fetch('/api/flowchart', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Edit-Token': pw },
+    body: JSON.stringify(flowData)
+  });
+}
+
+// ── persist(): always saves locally; also fires API if password known ──
+function persist() {
+  localSave();
+  var pw = getPw();
+  if (pw) {
+    apiSave(pw).then(function(r) {
+      if (r && r.status === 401) { clearPw(); } // wrong pw, clear it
+    }).catch(function(){});
+  }
+}
+
+// ── Explicit save button: prompts for password, saves online ────────
+window.fcSaveAll = function() {
+  var pw = getPw();
+  if (!pw) {
+    pw = prompt('Enter your edit password to save online:');
+    if (pw === null) return; // user cancelled
+    if (!pw) { localSave(); toast('Saved locally ✓'); return; }
+    setPw(pw);
+  }
+  toast('Saving…');
+  apiSave(pw).then(function(r) {
+    if (!r) { localSave(); toast('Saved locally (offline) ✓'); return; }
+    if (r.status === 401) {
+      clearPw();
+      toast('❌ Wrong password — try again');
+    } else if (r.ok) {
+      localSave();
+      toast('Saved online ✓  Everyone will see your changes');
+    } else {
+      localSave(); toast('Saved locally ✓');
+    }
+  }).catch(function() { localSave(); toast('Saved locally (offline) ✓'); });
+};
+
+window.fcResetAll = function() {
+  if (!confirm('Reset to original? All edits will be lost.')) return;
+  localStorage.removeItem(STORE_KEY);
+  // Also clear on server if password is known
+  var pw = getPw();
+  if (pw) {
+    // POST an empty reset signal — we reload either way
+    apiSave(pw).catch(function(){});
+  }
+  location.reload();
+};
+
+/* ─────────────────────────────────────────────────────────────────
+   HTML EXPORT
+   ───────────────────────────────────────────────────────────────── */
+window.fcExport = function() {
+  // Build clean flow HTML (strip editor artifacts)
+  var cleanItems = JSON.parse(JSON.stringify(flowData));
+  var cleanHtml = buildCleanHtml(cleanItems);
+
+  // Get the full page HTML and swap the .flow contents
+  var full = document.documentElement.outerHTML;
+  // Replace the .flow div content
+  var flowEl  = document.querySelector('.flow');
+  var origInner = flowEl.innerHTML;
+  flowEl.innerHTML = cleanHtml;
+  var exported = document.documentElement.outerHTML;
+  flowEl.innerHTML = origInner; // restore
+
+  var blob = new Blob([exported], {type:'text/html;charset=utf-8'});
+  var a    = document.createElement('a');
+  a.href   = URL.createObjectURL(blob);
+  a.download = 'flowchart.html';
+  a.click();
+  toast('HTML exported ✓');
+};
+
+function buildCleanHtml(data) {
+  return data.map(function(item) {
+    if (item.type === 'node') {
+      var subHtml = item.sub ? '\n      <div class="node-sub">'+item.sub+'</div>' : '';
+      return '\n    <div class="node '+item.nodeType+'">\n      <div class="node-label">'+esc(item.label)+'</div>\n      <div class="node-title">'+esc(item.title)+'</div>'+subHtml+'\n    </div>';
+    } else if (item.type === 'connector') {
+      var lbl = item.label ? ' <span class="connector-label">'+esc(item.label)+'</span>' : '';
+      return '\n    <div class="connector">↓'+lbl+'</div>';
+    } else if (item.type === 'branch') {
+      var cols = item.branches.map(function(b) {
+        var subHtml = b.sub ? '\n          <div class="node-sub">'+b.sub+'</div>' : '';
+        return '      <div>\n        <span class="branch-tag '+b.tagClass+'">'+esc(b.tagText)+'</span>\n        <div class="node '+b.nodeType+'">\n          <div class="node-label">'+esc(b.label)+'</div>\n          <div class="node-title">'+esc(b.title)+'</div>'+subHtml+'\n        </div>\n      </div>';
+      }).join('\n');
+      return '\n    <div class="branch-grid">\n'+cols+'\n    </div>';
+    }
+    return '';
+  }).join('');
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   UTILITIES
+   ───────────────────────────────────────────────────────────────── */
+function esc(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function escAttr(s) {
+  return (s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function clearSel() {
+  document.querySelectorAll('.node.fc-sel').forEach(function(n){ n.classList.remove('fc-sel'); });
+}
+function toast(msg) {
+  var t = document.getElementById('fc-toast');
+  t.textContent = msg;
+  t.classList.add('fc-show');
+  setTimeout(function(){ t.classList.remove('fc-show'); }, 2200);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   INIT
+   ───────────────────────────────────────────────────────────────── */
+function injectUI() {
+  var toolbar = document.createElement('div');
+  toolbar.className = 'fc-toolbar';
+  toolbar.innerHTML = [
+    '<button class="fc-btn" id="fc-main-btn" onclick="fcToggle()">✏  Edit flowchart</button>',
+    '<div class="fc-toolbar-secondary">',
+    '  <button class="fc-btn fc-btn-sm" onclick="fcSaveAll()">💾  Save online</button>',
+    '  <button class="fc-btn fc-btn-sm" onclick="fcAddNewBlock()">＋  Add block</button>',
+    '  <button class="fc-btn fc-btn-sm" onclick="fcExport()">⬇  Export HTML</button>',
+    '  <button class="fc-btn fc-btn-sm fc-btn-danger" onclick="fcResetAll()">↺  Reset</button>',
+    '</div>'
+  ].join('');
+  document.body.appendChild(toolbar);
+
+  var panel = document.createElement('div');
+  panel.id        = 'fc-panel';
+  panel.className = 'fc-panel';
+  panel.innerHTML = [
+    '<div class="fc-panel-hd">',
+    '  <span class="fc-panel-hd-title" id="fc-panel-title">Edit block</span>',
+    '  <button class="fc-panel-close" onclick="closePanel()">✕</button>',
+    '</div>',
+    '<div id="fc-panel-body"></div>'
+  ].join('');
+  document.body.appendChild(panel);
+
+  var toastEl = document.createElement('div');
+  toastEl.id        = 'fc-toast';
+  toastEl.className = 'fc-toast';
+  document.body.appendChild(toastEl);
+}
+
+function init() {
+  // 1. Parse current DOM before any re-render
+  var domData   = parseDom();
+  var localData = localLoad();
+
+  // 2. Render immediately from best available local source
+  flowData = localData || domData;
+  if (localData) renderFlow(flowData);
+
+  // 3. Inject editor UI
+  injectUI();
+
+  // 4. In background: fetch from online API and update if newer data found
+  apiLoad().then(function(apiData) {
+    if (!apiData || !Array.isArray(apiData)) return;
+    flowData = apiData;
+    renderFlow(flowData);
+    localSave(); // keep localStorage in sync with server
+  }).catch(function(){});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+})();
+</script>
+
 </body>
 </html>
