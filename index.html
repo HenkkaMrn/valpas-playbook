@@ -266,6 +266,59 @@
     .theme-toggle  { margin-left: 0; }
     .branch-grid   { grid-template-columns: 1fr; }
   }
+
+  /* ── LIGHT MODE FIXES ───────────────────────────────────── */
+  body.light .open-items p { color: rgba(7,10,25,0.65); }
+  body.light .open-items { background: rgba(255,173,50,0.08); border-color: rgba(255,173,50,0.3); }
+  body.light .open-items-label { color: #c47e00; }
+  body.light .status-tbd { color: #c47e00; }
+  body.light .note { color: rgba(7,10,25,0.55); }
+  body.light .step-num { color: rgba(7,10,25,0.4); }
+  body.light .section-intro { color: rgba(7,10,25,0.55); }
+  body.light .phase-goal { color: rgba(7,10,25,0.45); }
+  body.light .phase-num { color: #c47e00; }
+  body.light .connector { color: rgba(7,10,25,0.4); }
+  body.light .connector-label { color: rgba(7,10,25,0.4); }
+  body.light .flow-sub { color: rgba(7,10,25,0.45); }
+  body.light .node-sub { color: rgba(7,10,25,0.55); }
+  body.light .node-title { color: #070A19; }
+  body.light .legend-item { color: rgba(7,10,25,0.6); }
+  /* Keep legend dots visible by using border as the color indicator */
+  body.light .legend-dot { opacity: 1; outline: 1px solid rgba(7,10,25,0.12); }
+  body.light .n-start   { background: #f5f0e8; border-color: rgba(180,120,0,0.4); }
+  body.light .n-before  { background: #edf3f8; border-color: rgba(100,160,210,0.4); }
+  body.light .n-during  { background: #f0eef8; border-color: rgba(150,140,220,0.4); }
+  body.light .n-hotel   { background: #edf7f1; border-color: rgba(60,160,100,0.35); }
+  body.light .n-followup{ background: #edf3f8; border-color: rgba(100,160,210,0.3); }
+  body.light .n-verify  { background: #f0eef8; border-color: rgba(150,140,220,0.3); }
+  body.light .n-decision{ background: #f4f3f2; border-color: rgba(7,10,25,0.2); }
+  body.light .n-success { background: #edf7f2; border-color: rgba(60,160,100,0.4); }
+  body.light .n-fail    { background: #fdf0f0; border-color: rgba(200,80,80,0.35); }
+  body.light .n-tbd     { background: #fdf6ec; border-color: rgba(180,120,0,0.3); }
+  body.light .n-start .node-label   { color: #c47e00; }
+  body.light .n-before .node-label  { color: #4a8ab0; }
+  body.light .n-during .node-label  { color: #6e6ab0; }
+  body.light .n-hotel .node-label   { color: #3a9060; }
+  body.light .n-followup .node-label{ color: #4a8ab0; }
+  body.light .n-verify .node-label  { color: #6e6ab0; }
+  body.light .n-decision .node-label{ color: rgba(7,10,25,0.5); }
+  body.light .n-success .node-label { color: #3a9060; }
+  body.light .n-fail .node-label    { color: #c05050; }
+  body.light .n-tbd .node-label     { color: #c47e00; }
+  body.light .w-notion    { background: rgba(7,10,25,0.05); color: #070A19; border-color: rgba(7,10,25,0.18); }
+  body.light .w-dashboard { background: rgba(180,120,0,0.08); color: #9a6800; border-color: rgba(180,120,0,0.3); }
+  body.light .w-app       { background: rgba(100,90,200,0.07); color: #5550a0; border-color: rgba(100,90,200,0.25); }
+  body.light .w-email     { background: rgba(60,130,190,0.07); color: #2a6a9a; border-color: rgba(60,130,190,0.25); }
+  body.light .w-call      { background: rgba(200,100,50,0.07); color: #a05020; border-color: rgba(200,100,50,0.25); }
+  body.light .owner-ops   { color: #9a6800; }
+  body.light .owner-csm   { color: #2a6a9a; }
+  body.light .owner-both  { color: #3a3a3a; }
+  body.light .owner-hotel { color: rgba(7,10,25,0.45); }
+  body.light footer span  { color: rgba(7,10,25,0.4); }
+  body.light footer { border-top-color: rgba(7,10,25,0.1); }
+  body.light .step-title  { color: #070A19; }
+  body.light .bt-yes { background: rgba(60,160,100,0.1); color: #3a8060; border-color: rgba(60,160,100,0.3); }
+  body.light .bt-no  { background: rgba(200,80,80,0.1);  color: #a04040; border-color: rgba(200,80,80,0.3); }
 </style>
 </head>
 <body>
@@ -279,6 +332,8 @@
     <a href="index.html" class="active">Playbook</a>
     <a href="flowchart.html">Flowchart</a>
     <a href="agenda.html">Agenda</a>
+    <a href="/guide">Guide</a>
+    <a href="/templates">Templates</a>
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Light</button>
   </nav>
 </div>
