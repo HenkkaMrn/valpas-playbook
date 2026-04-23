@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valpas — Hotel Search</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:     #070A19;
+    --off-white: #FBF7F4;
+    --white:     #FFFFFF;
+    --yellow:    #FFAD32;
+    --surface:   #0f1222;
+    --surface2:  #141828;
+    --border:    rgba(251,247,244,0.1);
+    --muted:     rgba(251,247,244,0.42);
+    --text:      #FBF7F4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* GRADIENT HEADER */
+  .gradient-band {
+    background: linear-gradient(155deg, #E4F1FC 0%, #F0F6FA 22%, #FBF7F4 46%, #DCD9FF 68%, #FFC4A2 100%);
+    padding: 52px 52px 48px;
+    position: relative;
+  }
+  .logo-img { height: 26px; width: auto; margin-bottom: 44px; display: block; }
+  .header-meta {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(7,10,25,0.45); margin-bottom: 10px; font-weight: 500;
+  }
+  .header-title {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 54px; font-weight: 400; color: var(--black);
+    line-height: 1.05; letter-spacing: -0.02em; max-width: 580px;
+  }
+  .header-title em { font-style: italic; color: rgba(7,10,25,0.55); }
+  .header-badge {
+    position: absolute; top: 52px; right: 52px;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(7,10,25,0.45); border: 1px solid rgba(7,10,25,0.18);
+    padding: 6px 16px; border-radius: 100px; font-weight: 500;
+  }
+
+  /* SITE NAV */
+  .site-nav {
+    display: flex; gap: 4px;
+    margin-top: 40px;
+    border-top: 1px solid rgba(7,10,25,0.12);
+    padding-top: 20px;
+  }
+  .site-nav a {
+    font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase;
+    font-weight: 600; text-decoration: none;
+    padding: 7px 18px; border-radius: 100px;
+    color: rgba(7,10,25,0.45);
+    transition: background 0.15s, color 0.15s;
+  }
+  .site-nav a:hover  { background: rgba(7,10,25,0.07); color: rgba(7,10,25,0.7); }
+  .site-nav a.active { background: rgba(7,10,25,0.09); color: rgba(7,10,25,0.85); }
+
+  /* MAIN */
+  main { padding: 60px 52px; max-width: 900px; margin: 0 auto; }
+
+  /* SEARCH BAR */
+  .search-wrap {
+    display: flex; gap: 10px; margin-bottom: 48px;
+  }
+  .search-wrap input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-wrap input::placeholder { color: var(--muted); }
+  .search-wrap input:focus { border-color: rgba(251,247,244,0.35); }
+  .search-wrap button {
+    background: var(--yellow);
+    color: var(--black);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+  }
+  .search-wrap button:hover   { opacity: 0.85; }
+  .search-wrap button:disabled { opacity: 0.5; cursor: default; }
+
+  /* RESULTS */
+  #results { display: flex; flex-direction: column; gap: 16px; }
+
+  .hotel-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s;
+  }
+  .hotel-card:hover { border-color: rgba(251,247,244,0.25); }
+
+  .hotel-name {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .hotel-sub {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 20px;
+  }
+
+  .hotel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px 24px;
+  }
+  .hotel-field label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 3px;
+    font-weight: 600;
+  }
+  .hotel-field span {
+    font-size: 13px;
+    color: var(--text);
+  }
+  .hotel-field span.empty { color: var(--muted); font-style: italic; }
+
+  .status-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    white-space: nowrap;
+    align-self: start;
+  }
+  .status-badge.green  { background: rgba(52,199,89,0.15);  color: #34C759; }
+  .status-badge.yellow { background: rgba(255,173,50,0.15); color: #FFAD32; }
+  .status-badge.blue   { background: rgba(10,132,255,0.15); color: #0A84FF; }
+  .status-badge.gray   { background: rgba(251,247,244,0.08); color: var(--muted); }
+
+  .message {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    padding: 48px 0;
+  }
+  .message strong { display: block; font-size: 18px; color: var(--text); margin-bottom: 6px; }
+
+  /* FOOTER */
+  footer {
+    margin-top: 80px; padding: 32px 52px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  footer img { height: 18px; opacity: 0.3; }
+  footer span { font-size: 11px; color: var(--muted); font-style: italic; }
+
+  /* LIGHT MODE */
+  body.light {
+    --black:    #F5F3EF;
+    --surface:  #FFFFFF;
+    --surface2: #EDEAE5;
+    --border:   rgba(7,10,25,0.09);
+    --muted:    rgba(7,10,25,0.45);
+    --text:     #070A19;
+    --off-white:#070A19;
+  }
+  body.light .search-wrap input { background: #fff; color: #070A19; }
+  body.light .search-wrap input::placeholder { color: rgba(7,10,25,0.35); }
+  body.light .hotel-card { background: #fff; }
+
+  @media (max-width: 640px) {
+    .gradient-band { padding: 32px 24px 32px; }
+    main { padding: 40px 24px; }
+    .header-title { font-size: 36px; }
+    .header-badge { display: none; }
+    .site-nav { flex-wrap: wrap; gap: 6px; }
+    footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    .hotel-card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="gradient-band">
+  <img class="logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' fill='%23070A19'%3E%3Ctext y='22' font-family='serif' font-size='22' font-weight='700'%3EValpas%3C/text%3E%3C/svg%3E" alt="Valpas">
+  <div class="header-meta">Fulfillment</div>
+  <h1 class="header-title">Hotel <em>search</em></h1>
+  <span class="header-badge">Live · Notion</span>
+  <nav class="site-nav">
+    <a href="index.html">Playbook</a>
+    <a href="flowchart.html">Flowchart</a>
+    <a href="agenda.html">Agenda</a>
+    <a href="/guide">Guide</a>
+    <a href="/templates">Templates</a>
+    <a href="hotels.html" class="active">Hotels</a>
+  </nav>
+</div>
+
+<main>
+  <form class="search-wrap" id="searchForm">
+    <input type="text" id="searchInput" placeholder="Type a hotel name…" autocomplete="off" autofocus>
+    <button type="submit" id="searchBtn">Search</button>
+  </form>
+
+  <div id="results"></div>
+</main>
+
+<footer>
+  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28' fill='%23FBF7F4'%3E%3Ctext y='22' font-family='serif' font-size='22' font-weight='700'%3EValpas%3C/text%3E%3C/svg%3E" alt="">
+  <span>Live data from Notion Fulfillment Board</span>
+</footer>
+
+<script>
+  // Respect system theme
+  if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+    document.body.classList.add('light');
+  }
+
+  const form    = document.getElementById('searchForm');
+  const input   = document.getElementById('searchInput');
+  const btn     = document.getElementById('searchBtn');
+  const results = document.getElementById('results');
+
+  let debounceTimer;
+
+  input.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    const q = input.value.trim();
+    if (q.length >= 2) {
+      debounceTimer = setTimeout(() => search(q), 350);
+    } else if (!q) {
+      results.innerHTML = '';
+    }
+  });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const q = input.value.trim();
+    if (q) search(q);
+  });
+
+  async function search(q) {
+    btn.disabled = true;
+    btn.textContent = '…';
+    results.innerHTML = '<p class="message">Searching…</p>';
+
+    try {
+      const res  = await fetch('/api/hotel?q=' + encodeURIComponent(q));
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || 'Request failed');
+
+      if (!data.length) {
+        results.innerHTML = '<p class="message"><strong>No results</strong>No hotels matched "' + escHtml(q) + '"</p>';
+        return;
+      }
+
+      results.innerHTML = data.map(renderCard).join('');
+    } catch (err) {
+      results.innerHTML = '<p class="message"><strong>Error</strong>' + escHtml(err.message) + '</p>';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Search';
+    }
+  }
+
+  function renderCard(h) {
+    const sub = [h.city?.join(', '), h.group?.join(', ')].filter(Boolean).join(' · ');
+    return `
+      <a class="hotel-card" href="${escAttr(h.url)}" target="_blank" rel="noopener">
+        <div>
+          <div class="hotel-name">${escHtml(h.name || '—')}</div>
+          <div class="hotel-sub">${escHtml(sub || 'No location')}</div>
+          <div class="hotel-grid">
+            ${field('Rooms',            h.rooms)}
+            ${field('Gateways',         h.gateways)}
+            ${field('Install type',     h.installationType?.join(', '))}
+            ${field('Lead contact',     h.leadContact)}
+            ${field('Install scheduled',fmtDate(h.installationSchedule))}
+            ${field('Install done',     fmtDate(h.installationDone))}
+            ${field('Delivery done',    fmtDate(h.deliveryDone))}
+          </div>
+        </div>
+        ${h.status ? `<span class="status-badge ${statusColor(h.status)}">${escHtml(h.status)}</span>` : ''}
+      </a>`;
+  }
+
+  function field(label, value) {
+    const empty = value == null || value === '';
+    return `
+      <div class="hotel-field">
+        <label>${escHtml(label)}</label>
+        <span class="${empty ? 'empty' : ''}">${empty ? 'N/A' : escHtml(String(value))}</span>
+      </div>`;
+  }
+
+  function fmtDate(str) {
+    if (!str) return null;
+    const d = new Date(str + 'T00:00:00');
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  function statusColor(s) {
+    const lower = (s || '').toLowerCase();
+    if (lower.includes('done') || lower.includes('install') || lower.includes('complet')) return 'green';
+    if (lower.includes('progress') || lower.includes('pending') || lower.includes('schedul')) return 'yellow';
+    if (lower.includes('ship') || lower.includes('deliver') || lower.includes('transit')) return 'blue';
+    return 'gray';
+  }
+
+  function escHtml(s) {
+    return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function escAttr(s) {
+    return String(s ?? '').replace(/"/g,'&quot;');
+  }
+</script>
+</body>
+</html>
