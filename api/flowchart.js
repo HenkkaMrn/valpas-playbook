@@ -10,13 +10,12 @@
 
 const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 const EDIT_PW    = process.env.EDIT_PASSWORD;
-const BLOB_BASE   = 'https://blob.vercel-storage.com';
-const BLOB_FILE   = 'valpas-flowchart-data.json';
-const BLOB_PREFIX = 'valpas-flowchart-data'; // Vercel adds a random suffix, so match without extension
+const BLOB_BASE  = 'https://blob.vercel-storage.com';
+const BLOB_FILE  = 'valpas-flowchart-data.json';
 
 // ── Blob REST helpers ────────────────────────────────────────────
 async function blobList() {
-  const r = await fetch(`${BLOB_BASE}?prefix=${BLOB_PREFIX}&limit=100`, {
+  const r = await fetch(`${BLOB_BASE}?prefix=${BLOB_FILE}&limit=5`, {
     headers: { Authorization: `Bearer ${BLOB_TOKEN}`, 'x-api-version': '7' }
   });
   const body = await r.json();
