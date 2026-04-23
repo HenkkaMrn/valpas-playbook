@@ -220,7 +220,18 @@
   .site-nav a.active {
     background: rgba(7,10,25,0.09);
     color: rgba(7,10,25,0.85);
-  }</style>
+  }
+  /* ── THEME TOGGLE ────────────────────────────────────────── */
+  .theme-toggle {
+    margin-left: auto;
+    background: none; border: 1px solid rgba(7,10,25,0.18);
+    border-radius: 100px; padding: 5px 14px;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 600; color: rgba(7,10,25,0.5);
+    cursor: pointer; font-family: inherit; transition: opacity 0.15s;
+  }
+  .theme-toggle:hover { opacity: 0.7; }
+</style>
 </head>
 <body>
 
@@ -229,12 +240,12 @@
   <div class="header-meta">Operations · Internal</div>
   <h1 class="header-title">Kickoff Call<br><em>Agenda</em></h1>
   <div class="header-badge">Draft v1 · Apr 2026</div>
-  <nav class="site-nav">
+    <nav class="site-nav">
     <a href="index.html">Playbook</a>
     <a href="flowchart.html">Flowchart</a>
     <a href="agenda.html" class="active">Agenda</a>
-    <a href="/guide">Guide</a>
-    <a href="/templates">Templates</a>
+    <a href="guide.html">Guide</a>
+    <a href="templates.html">Templates</a>
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Light</button>
   </nav>
 </div>
