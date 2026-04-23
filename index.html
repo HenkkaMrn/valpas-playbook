@@ -93,6 +93,7 @@
   .playbook-table tbody tr:hover { background: rgba(255,255,255,0.02); }
 
   .step-num { font-size: 11px; color: var(--muted); white-space: nowrap; font-weight: 500; }
+  .section-intro { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 18px 0 20px; }
 
   /* TAGS */
   .where {
@@ -410,56 +411,88 @@
     <span class="phase-goal">Hotel contact leaves confident. No need to call for basic steps.</span>
   </div>
 
+  <p class="section-intro">Use this section to guide the kickoff call live. The goal is to leave the hotel ready to start the installation, clear on the process, aware of common issues, and confident about how to get help if needed.</p>
+
   <div class="table-wrap"><table class="playbook-table">
     <thead><tr><th>#</th><th>Topic</th><th>Tool</th><th>Key Points to Cover</th></tr></thead>
     <tbody>
       <tr>
         <td class="step-num">01</td>
-        <td>Router setup</td>
-        <td><span class="where w-app">App + Guide</span></td>
-        <td class="note">Placement: max one wall from rooms. Ethernet vs Wi-Fi. Status lights: green = good, red = restart first, then contact OPS.</td>
+        <td>Open hotel account on phone and desktop</td>
+        <td><span class="where w-app">App</span> <span class="where w-dashboard">Dashboard</span></td>
+        <td class="note">Impersonate the hotel account on mobile and desktop. Confirm login works, account is correct, and the hotel sees the expected setup.</td>
       </tr>
       <tr>
         <td class="step-num">02</td>
-        <td>App login and Installation Mode</td>
-        <td><span class="where w-app">App</span></td>
-        <td class="note">Confirm they can log in live. Profile → Installation Mode → tap "+" → add room → name it. Walk through naming convention.</td>
+        <td>Follow the kickoff call agenda</td>
+        <td><span class="where w-call">Live Call</span> <span class="where w-notion"><a href="agenda.html" style="color:inherit;text-decoration:none;">Agenda</a></span></td>
+        <td class="note">Use the standard kickoff agenda to keep the meeting consistent and make sure all key points are covered.</td>
       </tr>
       <tr>
         <td class="step-num">03</td>
-        <td>Smart leg installation (beds with legs)</td>
+        <td>Router setup</td>
         <td><span class="where w-app">App + Guide</span></td>
-        <td class="note">Head end = smart legs. Foot = basic legs. Corner beds: smart leg faces the room. Pairing: remove cassette → pair → remove battery strip → reinsert → confirm blinking red.</td>
+        <td class="note">Placement: as close as possible to rooms, ideally no more than one wall away. Explain Ethernet vs Wi-Fi if relevant. Status lights: green is good, red means restart first, then contact OPS.</td>
       </tr>
       <tr>
         <td class="step-num">04</td>
-        <td>Wall mount installation (platform beds only)</td>
-        <td><span class="where w-app">App + Guide</span></td>
-        <td class="note">Only cover if hotel has beds without legs. Use leg as height guide before screwing mount. Verify cassette is easily removable before finishing.</td>
+        <td>App login and Installation Mode</td>
+        <td><span class="where w-app">App</span></td>
+        <td class="note">Confirm they can log in live. Walk through Installation Mode and room naming convention step by step.</td>
       </tr>
       <tr>
         <td class="step-num">05</td>
-        <td>Routing devices (only if rooms go offline)</td>
-        <td><span class="where w-app">App</span></td>
-        <td class="note">Do NOT open unless rooms stay offline after 8h. One near router, others between router and problem rooms. Remove battery strip to activate. Wait up to 8h.</td>
+        <td>Smart leg installation — beds with legs</td>
+        <td><span class="where w-app">App + Guide</span></td>
+        <td class="note">Smart legs go near the headboard and must stay accessible. If one side is against a wall, place the smart leg on the room-facing side. Basic legs go in the remaining positions. Walk through pairing and battery strip activation.</td>
       </tr>
       <tr>
         <td class="step-num">06</td>
-        <td>What "done" looks like</td>
-        <td><span class="where w-dashboard">Dashboard</span></td>
-        <td class="note">All rooms visible in app. All cassettes blinking red on install. Router green. Hotel confirms to OPS by message when complete.</td>
+        <td>Wall mount installation — platform beds only</td>
+        <td><span class="where w-app">App + Guide</span></td>
+        <td class="note">Cover this only if the hotel has beds without legs. Use the leg as a height guide before fixing the mount. Confirm the cassette stays easy to remove before finishing.</td>
       </tr>
       <tr>
         <td class="step-num">07</td>
-        <td>Troubleshooting during install</td>
-        <td><span class="where w-call">Live Call</span></td>
-        <td class="note">Cassette not blinking → remove and reinsert. Room offline → check open tasks first, then add routing device. Router red → restart, then contact OPS.</td>
+        <td>Show the installation flow in the app</td>
+        <td><span class="where w-app">App</span></td>
+        <td class="note">Demonstrate room creation, cassette pairing, and how to confirm that a room has been added correctly.</td>
       </tr>
       <tr>
         <td class="step-num">08</td>
-        <td>Escalation path — what to do if something is broken</td>
+        <td>Routing devices — only if rooms stay offline</td>
+        <td><span class="where w-app">App + Guide</span></td>
+        <td class="note">Do not open routing devices unless rooms remain offline after the expected waiting period. Explain where they should be placed and that they may take time to connect.</td>
+      </tr>
+      <tr>
+        <td class="step-num">09</td>
+        <td>What done looks like</td>
+        <td><span class="where w-dashboard">Dashboard</span> <span class="where w-app">App</span></td>
+        <td class="note">Explain what a completed installation looks like: all rooms visible, all expected rooms installed, cassettes active, router working, and hotel ready to confirm completion.</td>
+      </tr>
+      <tr>
+        <td class="step-num">10</td>
+        <td>Documentation after installation</td>
         <td><span class="where w-call">Live Call</span></td>
-        <td><span class="status-tbd">⚠ To design</span> <span class="note">— define what the hotel handles vs what goes to OPS</span></td>
+        <td class="note">Explain what pictures or other documentation the hotel must send after completion so Valpas can verify installation quality.</td>
+      </tr>
+      <tr>
+        <td class="step-num">11</td>
+        <td>Common issues and first checks</td>
+        <td><span class="where w-call">Live Call</span> <span class="where w-app">Guide</span></td>
+        <td class="note">Cover common issues such as cassette not blinking, room offline, router red, or unexpected bed setup. Explain the first thing to check in each case.</td>
+      </tr>
+      <tr>
+        <td class="step-num">12</td>
+        <td>Escalation path</td>
+        <td><span class="where w-call">Live Call</span></td>
+        <td class="note">Explain when the hotel can continue on their own and when they should stop, take pictures, and contact OPS. Clarify what goes to the hotel team and what must be escalated.</td>
+      </tr>
+      <tr>
+        <td class="step-num">13</td>
+        <td>Installation deadline and next step</td>
+        <td><span class="where w-call">Live Call</span></td>
+        <td class="note">Agree on the installation deadline, confirm how progress will be followed, and explain the next step after completion — including verification and certification follow-up.</td>
       </tr>
     </tbody>
   </table>
