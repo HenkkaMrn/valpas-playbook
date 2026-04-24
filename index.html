@@ -439,6 +439,11 @@ body.light .nav-card-desc  { color: rgba(7,10,25,0.5); }
 body.light .nav-card-arrow { color: rgba(7,10,25,0.3); }
 body.light .landing-intro h2 { color: var(--off-white); }
 body.light .section-label-top { color: rgba(7,10,25,0.4); }
+
+  .about-card-tagline {
+    font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.4;
+  }
+  body.light .about-card-tagline { color: rgba(7,10,25,0.45); }
 </style>
 </head>
 
@@ -473,11 +478,12 @@ body.light .section-label-top { color: rgba(7,10,25,0.4); }
     <div class="section-label-top">At a glance</div>
     <div class="about-grid">
 
-      <details class="about-card">
+      <details class="about-card sync-card">
         <summary>
           <div>
-            <div class="about-card-label">01 — What</div>
+            <div class="about-card-label">01 What</div>
             <div class="about-card-title">What is this?</div>
+            <div class="about-card-tagline">A blueprint for self install guidance</div>
           </div>
           <span class="about-card-chevron">▾</span>
         </summary>
@@ -486,11 +492,12 @@ body.light .section-label-top { color: rgba(7,10,25,0.4); }
         </div>
       </details>
 
-      <details class="about-card">
+      <details class="about-card sync-card">
         <summary>
           <div>
-            <div class="about-card-label">02 — Who</div>
+            <div class="about-card-label">02 Who</div>
             <div class="about-card-title">Who is it for?</div>
+            <div class="about-card-tagline">Valpas, CSM and Ops</div>
           </div>
           <span class="about-card-chevron">▾</span>
         </summary>
@@ -499,11 +506,12 @@ body.light .section-label-top { color: rgba(7,10,25,0.4); }
         </div>
       </details>
 
-      <details class="about-card">
+      <details class="about-card sync-card">
         <summary>
           <div>
-            <div class="about-card-label">03 — Why</div>
+            <div class="about-card-label">03 Why</div>
             <div class="about-card-title">Why does it matter?</div>
+            <div class="about-card-tagline">Standardize processes</div>
           </div>
           <span class="about-card-chevron">▾</span>
         </summary>
@@ -513,6 +521,7 @@ body.light .section-label-top { color: rgba(7,10,25,0.4); }
       </details>
 
     </div>
+
   </div>
 
   <div style="max-width:900px; margin: 0 auto;">
@@ -588,5 +597,17 @@ body.light .section-label-top { color: rgba(7,10,25,0.4); }
   });
 </script>
 
+
+<script>
+(function() {
+  var cards = document.querySelectorAll('.sync-card');
+  cards.forEach(function(card) {
+    card.addEventListener('toggle', function() {
+      var isOpen = card.open;
+      cards.forEach(function(c) { c.open = isOpen; });
+    });
+  });
+})();
+</script>
 </body>
 </html>
