@@ -221,16 +221,45 @@
     background: rgba(7,10,25,0.09);
     color: rgba(7,10,25,0.85);
   }
-  /* ── THEME TOGGLE ────────────────────────────────────────── */
+
+  /* THEME TOGGLE */
   .theme-toggle {
-    margin-left: auto;
-    background: none; border: 1px solid rgba(7,10,25,0.18);
+    margin-left: auto; background: none; border: 1px solid rgba(7,10,25,0.18);
     border-radius: 100px; padding: 5px 14px;
     font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
     font-weight: 600; color: rgba(7,10,25,0.5);
     cursor: pointer; font-family: inherit; transition: opacity 0.15s;
   }
   .theme-toggle:hover { opacity: 0.7; }
+
+  /* LIGHT MODE */
+  body.light {
+    --black:    #F5F3EF;
+    --surface:  #FFFFFF;
+    --surface2: #EDEAE5;
+    --border:   rgba(7,10,25,0.09);
+    --muted:    rgba(7,10,25,0.45);
+    --text:     #070A19;
+    --off-white:#070A19;
+  }
+  body.light .phase-num { color: #c47e00; }
+  body.light .phase-goal { color: rgba(7,10,25,0.45); }
+  body.light .phase-title { color: #070A19; }
+  body.light .t-part { color: #c47e00; }
+  body.light .t-goal { color: #070A19; }
+  body.light .t-outcome { color: rgba(180,120,0,0.85); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .gradient-band { padding: 32px 20px 24px; }
+    .header-title  { font-size: 34px; }
+    .header-badge  { position: static; display: inline-block; margin-top: 14px; }
+    main           { padding: 36px 16px; }
+    footer         { padding: 24px 20px; flex-direction: column; gap: 10px; text-align: center; }
+    .site-nav      { flex-wrap: wrap; gap: 6px; }
+    .theme-toggle  { margin-left: 0; }
+  }
+
 </style>
 </head>
 <body>
@@ -242,10 +271,12 @@
   <div class="header-badge">Draft v1 · Apr 2026</div>
     <nav class="site-nav">
     <a href="index.html">Playbook</a>
+    <a href="process.html">Process</a>
     <a href="flowchart.html">Flowchart</a>
     <a href="agenda.html" class="active">Agenda</a>
-    <a href="guide.html">Guide</a>
-    <a href="templates.html">Templates</a>
+    <a href="/guide">Install Guide</a>
+    <a href="/templates">Templates</a>
+    <a href="hotels.html">Resources</a>
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Light</button>
   </nav>
 </div>
